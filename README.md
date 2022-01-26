@@ -26,4 +26,8 @@
     <a href="https://tailwindcss.com/" target="_blank" title="Tailwind">
         <img src="https://pbs.twimg.com/profile_images/1468993891584073729/a_op8KnL_400x400.jpg" height="55">
     </a>
+    &nbsp;&nbsp;
+    <a href="https://github.com/material-components/material-components-web" target="_blank" title="Materail Design Components">
+        <img src="https://pbs.twimg.com/profile_images/925576484122779648/ucVTUoPg_400x400.jpg" height="55">
+    </a>
 </p>
