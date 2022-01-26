@@ -13,10 +13,12 @@
         "laravel-vite": "^0.0.19",
         "lodash": "^4.17.19",
         "postcss": "^8.4.5",
+        "sass": "^1.49.0",
         "tailwindcss": "^3.0.16",
         "vite": "^2.6.0"
     },
     "dependencies": {
+        "material-components-web": "^13.0.0",
         "pinia": "^2.0.9",
         "vue": "^3.2.6",
         "vue-router": "^4.0.12"
