@@ -13,6 +13,7 @@ import { createApp } from 'vue'
 import App from '@/views/App.vue'
 import { router } from '@/ts/router'
 import { store } from '@/ts/store'
+import '@/css/app.css'
 
 const app = createApp(App)
     .use(store)
