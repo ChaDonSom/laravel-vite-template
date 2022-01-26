@@ -6,15 +6,17 @@
         "serve": "vite preview"
     },
     "devDependencies": {
+        "@vitejs/plugin-vue": "^1.9.2",
+        "@vue/compiler-sfc": "^3.2.19",
         "axios": "^0.21",
+        "laravel-vite": "^0.0.19",
         "lodash": "^4.17.19",
         "postcss": "^8.1.14",
-        "vite": "^2.6.0",
-        "laravel-vite": "^0.0.19",
-        "@vue/compiler-sfc": "^3.2.19",
-        "@vitejs/plugin-vue": "^1.9.2"
+        "vite": "^2.6.0"
     },
     "dependencies": {
-        "vue": "^3.2.6"
+        "pinia": "^2.0.9",
+        "vue": "^3.2.6",
+        "vue-router": "^4.0.12"
     }
 }

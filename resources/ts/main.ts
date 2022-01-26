@@ -11,5 +11,10 @@
 
 import { createApp } from 'vue'
 import App from '@/views/App.vue'
+import { router } from '@/ts/router'
+import { store } from '@/ts/store'
 
-createApp(App).mount('#app')
+const app = createApp(App)
+    .use(store)
+    .use(router)
+    .mount('#app')
