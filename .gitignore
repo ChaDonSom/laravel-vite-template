@@ -2,6 +2,11 @@
 /public/build
 /public/hot
 /public/storage
+/public/dev-sw.js
+/public/sw.js
+/public/manifest.json
+/public/manifest.webmanifest
+/public/workbox-*.js
 /storage/*.key
 /vendor
 .env

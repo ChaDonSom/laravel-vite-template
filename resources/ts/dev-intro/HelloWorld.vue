@@ -20,7 +20,7 @@
 			<a href="https://v3.vuejs.org/" target="_blank">Vue 3 Docs</a>
 		</p>
 
-		<Button @click="count++">count is: {{ count }}</Button>
+		<Button @click="count++"><i class="material-icons">edit</i> count is: {{ count }}</Button>
 		<p>
 			Edit
 			<code>components/Testing.vue</code> to test hot module replacement.
