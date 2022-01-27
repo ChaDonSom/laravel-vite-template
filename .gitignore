@@ -9,6 +9,7 @@
 /public/workbox-*.js
 /storage/*.key
 /vendor
+package-lock.json
 .env
 .env.backup
 .phpunit.result.cache
