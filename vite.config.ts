@@ -27,6 +27,7 @@ export default defineConfig()
 				},
 			]
 		},
+		base: '/',
 		filename: process.env.APP_ENV == 'production' ? 'sw.js' : 'dev-sw.js',
 		registerType: 'autoUpdate',
 		scope: '/',
