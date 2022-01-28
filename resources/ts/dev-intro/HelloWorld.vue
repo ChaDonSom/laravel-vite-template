@@ -28,8 +28,11 @@
 		<Button @click="count++"> Count is: {{ count }}</Button>
 		<p>
 			Edit
-			<code>components/Testing.vue</code> to test hot module replacement. <i class="material-icons">edit</i>
+			<code>components/Testing.vue</code> to test hot module replacement.
 		</p>
+		<div class="flex justify-center m-4">
+			<i class="material-icons">edit</i>
+		</div>
 		<p>
 			Production: {{ prod }}
 			BASE_URL: {{ baseUrl }}
