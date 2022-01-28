@@ -28,7 +28,10 @@ export default defineConfig()
 					}
 				},
 				{
-					urlPattern: ({ url }) => url.pathname == '/',
+					urlPattern: ({ url }) => {
+						console.log('url.pathname: ', url.pathname)
+						url.pathname == '/'
+					},
 					handler: 'NetworkOnly',
 				},
 			]
