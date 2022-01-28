@@ -9,7 +9,7 @@ export default defineConfig()
 			enabled: true,
 		},
 		workbox: {
-			globPatterns: ["**\/*.{js,css,html}"],
+			// globPatterns: ["**\/*.{js,css,html}"],
 			runtimeCaching: [
 				{
 					urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
