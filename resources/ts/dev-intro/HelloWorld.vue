@@ -37,7 +37,7 @@
 			<i class="material-icons">edit</i>
 		</div>
 		<p>
-			Production: {{ prod }}
+			Production: {{ prod }}<br>
 			BASE_URL: {{ baseUrl }}
 		</p>
 	</div>
