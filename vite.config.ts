@@ -6,7 +6,7 @@ export default defineConfig()
 	.withPlugin(vue)
 	.withPlugins(...VitePWA({
 		devOptions: {
-			enabled: true, // Enable to test the service worker
+			enabled: false, // Enable to test the service worker
 		},
 		workbox: {
 			globPatterns: ["**\/*.{js,css,html,php}"],
