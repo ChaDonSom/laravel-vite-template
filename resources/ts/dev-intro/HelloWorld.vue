@@ -38,7 +38,8 @@
 		</div>
 		<p>
 			Production: {{ prod }}<br>
-			BASE_URL: {{ baseUrl }}
+			BASE_URL: {{ baseUrl }}<br>
+			Small & larger breakpoint: {{ smAndLarger }}
 		</p>
 	</div>
 </template>
@@ -46,7 +47,7 @@
 <script lang="ts">
 import { ref, defineComponent } from 'vue';
 import Button from '@/ts/core/buttons/Button.vue'
-import { useMediaQuery } from '@vueuse/core'
+import { breakpointsTailwind, useBreakpoints, useMediaQuery } from '@vueuse/core'
 import { vite_asset } from '@/ts/core/utilities/build'
 
 export default defineComponent({
@@ -65,15 +66,15 @@ export default defineComponent({
 		const isSmallScreen = useMediaQuery('(min-width: 640px)')
 		const isMediumScreen = useMediaQuery('(max-width: 768px)')
 		const isLargeScreen = useMediaQuery('(max-width: 1024px)')
+		const breakpoints = useBreakpoints(breakpointsTailwind)
+		const smAndLarger = breakpoints.greater('sm')
 		
 		const prod = import.meta.env.PROD
 		const baseUrl = import.meta.env.VITE_DEV_SERVER_URL
 
 		return {
 			count,
-			isSmallScreen,
-			isMediumScreen,
-			isLargeScreen,
+			smAndLarger,
 			vite_asset,
 			prod,
 			baseUrl,
