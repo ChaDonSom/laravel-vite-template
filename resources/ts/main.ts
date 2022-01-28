@@ -17,8 +17,12 @@ import '@/css/app.css'
 import { registerSW } from 'virtual:pwa-register'
 
 const updateSW = registerSW({
-    // onNeedRefresh() {},
-    // onOfflineReady() {},
+    onNeedRefresh() {
+        if (confirm("New content, refresh please.")) window.location.reload()
+    },
+    onOfflineReady() {
+        console.log("Offline ready.")
+    },
     onRegisterError(error) {
         console.error(error)
     }
