@@ -27,6 +27,10 @@ export default defineConfig()
 					}
 					}
 				},
+				{
+					urlPattern: /^https:\/\/.*\/index\.php$/i,
+					handler: 'NetworkOnly',
+				},
 			]
 		},
 		base: '/',
