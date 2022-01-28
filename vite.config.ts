@@ -10,6 +10,7 @@ export default defineConfig()
 		},
 		workbox: {
 			globPatterns: ["**\/*.{js,css,html,php}"],
+			cleanupOutdatedCaches: true,
 			navigateFallback: 'index.php',
 			runtimeCaching: [
 				{
