@@ -1,7 +1,7 @@
 <template>
 	<div class="text-center m-3">
 		<div class="flex justify-center">
-			<img src="android-chrome-512x512.png" class="m-5 w-3/12">
+			<img src="/android-chrome-512x512.png" class="m-5 w-3/12">
 		</div>
 		<h1 class="text-3xl sm:text-5xl md:text-7xl font-thin">{{ msg }}</h1>
 
