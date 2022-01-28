@@ -9,3 +9,10 @@
   // mdc-theme--on-surface	Sets the text color to the color configured for text on the surface color.
   $background: #fefefe // mdc-theme--background
 );
+
+@use "@material/typography" with (
+  $font-family: unquote("Nunito Sans, Helvetica, sans-serif"),
+  $styles-button: (
+    text-transform: none,
+  )
+);

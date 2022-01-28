@@ -12,6 +12,7 @@
   <link rel="dns-prefetch" href="https://fonts.googleapis.com">
   <link rel="preconnect" crossorigin="anonymous" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200;300;400;600;700&display=swap" rel="stylesheet">
   <title>Laravel Vite Template</title>
   @vite
 </head>
