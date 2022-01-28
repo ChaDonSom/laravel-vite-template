@@ -18,10 +18,12 @@
 
 		<p>See <code>README.md</code> for more information.</p>
 
-		<p class="bg-gray-500">
-			<a href="https://vitejs.dev/guide/features.html" target="_blank">Vite Docs</a> |
-			<a href="https://v3.vuejs.org/" target="_blank">Vue 3 Docs</a>
-		</p>
+		<div class="flex justify-center m-2">
+			<p class="bg-gray-200 rounded-xl px-3 py-1">
+				<a href="https://vitejs.dev/guide/features.html" target="_blank">Vite Docs</a> |
+				<a href="https://v3.vuejs.org/" target="_blank">Vue 3 Docs</a>
+			</p>
+		</div>
 
 		<Button @click="count++"> Count is: {{ count }}</Button>
 		<p>
@@ -78,13 +80,7 @@ export default defineComponent({
 @use "@/css/mdc-theme";
 @use "@material/typography";
 @include typography.core-styles;
-a {
-	color: #42b983;
-}
-label {
-	margin: 0 0.5em;
-	font-weight: bold;
-}
+
 code {
 	background-color: #eee;
 	padding: 2px 4px;
