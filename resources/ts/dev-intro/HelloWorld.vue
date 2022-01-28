@@ -25,7 +25,10 @@
 			</p>
 		</div>
 
-		<Button @click="count++"> Count is: {{ count }}</Button>
+		<div class="flex justify-center gap-5">
+			<Button @click="count++"> Count is: {{ count }}</Button>
+			<Button @click="count++"> Count is: {{ count }}</Button>
+		</div>
 		<p>
 			Edit
 			<code>components/Testing.vue</code> to test hot module replacement.
