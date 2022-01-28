@@ -1,6 +1,9 @@
 <template>
 	<div class="text-center m-3">
-		<h1>{{ msg }}</h1>
+		<div class="flex justify-center">
+			<img src="android-chrome-512x512.png" class="m-5 w-3/12">
+		</div>
+		<h1 class="text-3xl sm:text-5xl md:text-7xl font-thin">{{ msg }}</h1>
 
 		<p>
 			Recommended IDE setup:
@@ -31,6 +34,8 @@
 <script lang="ts">
 import { ref, defineComponent } from 'vue';
 import Button from '@/ts/core/buttons/Button.vue'
+import { useMediaQuery } from '@vueuse/core'
+
 export default defineComponent({
 	name: 'HelloWorld',
 	props: {
@@ -43,13 +48,25 @@ export default defineComponent({
 		Button,
 	},
 	setup: () => {
-		const count = ref(0);
-		return { count };
+		const count = ref(0)
+		const isSmallScreen = useMediaQuery('(min-width: 640px)')
+		const isMediumScreen = useMediaQuery('(max-width: 768px)')
+		const isLargeScreen = useMediaQuery('(max-width: 1024px)')
+		
+		return {
+			count,
+			isSmallScreen,
+			isMediumScreen,
+			isLargeScreen,
+		}
 	},
-});
+})
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@use "@/css/mdc-theme";
+@use "@material/typography";
+@include typography.core-styles;
 a {
 	color: #42b983;
 }
