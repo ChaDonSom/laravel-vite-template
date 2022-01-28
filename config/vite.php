@@ -37,7 +37,7 @@ return [
     | at build-time.
     | https://vitejs.dev/config/#publicdir
     */
-    'public_directory' => public_path(),
+    'public_directory' => resource_path('static'),
 
     /*
     |--------------------------------------------------------------------------

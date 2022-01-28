@@ -1,7 +1,7 @@
 <template>
 	<div class="text-center m-3">
 		<div class="flex justify-center">
-			<img src="/android-chrome-512x512.png" class="m-5 w-3/12">
+			<img :src="vite_asset('android-chrome-512x512.png')" class="m-5 w-3/12">
 		</div>
 		<h1 class="text-3xl sm:text-5xl md:text-7xl font-thin">{{ msg }}</h1>
 
@@ -28,6 +28,10 @@
 			Edit
 			<code>components/Testing.vue</code> to test hot module replacement. <i class="material-icons">edit</i>
 		</p>
+		<p>
+			Production: {{ prod }}
+			BASE_URL: {{ baseUrl }}
+		</p>
 	</div>
 </template>
 
@@ -35,6 +39,7 @@
 import { ref, defineComponent } from 'vue';
 import Button from '@/ts/core/buttons/Button.vue'
 import { useMediaQuery } from '@vueuse/core'
+import { vite_asset } from '@/ts/core/utilities/build'
 
 export default defineComponent({
 	name: 'HelloWorld',
@@ -53,11 +58,17 @@ export default defineComponent({
 		const isMediumScreen = useMediaQuery('(max-width: 768px)')
 		const isLargeScreen = useMediaQuery('(max-width: 1024px)')
 		
+		const prod = import.meta.env.PROD
+		const baseUrl = import.meta.env.VITE_DEV_SERVER_URL
+
 		return {
 			count,
 			isSmallScreen,
 			isMediumScreen,
 			isLargeScreen,
+			vite_asset,
+			prod,
+			baseUrl,
 		}
 	},
 })
