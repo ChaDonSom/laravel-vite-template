@@ -28,7 +28,14 @@ export default defineConfig()
 					}
 				},
 				{
-					urlPattern: /^https:\/\/.*\/index\.php$/i,
+					urlPattern: ({ url }) => {
+						let appUrl = process.env.APP_URL
+						let endings = ['', '/', '/#/']
+						for (let ending of endings) {
+							if (`${appUrl}${ending}` == url.toString()) return true
+						}
+						return false
+					},
 					handler: 'NetworkOnly',
 				},
 			]
