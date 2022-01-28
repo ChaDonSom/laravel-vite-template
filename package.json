@@ -2,8 +2,10 @@
     "private": true,
     "scripts": {
         "dev": "vite",
+        "start": "php artisan serve & vite &",
         "build": "vite build",
-        "serve": "vite preview"
+        "serve": "vite preview",
+        "production": ". ./production.sh"
     },
     "devDependencies": {
         "@vitejs/plugin-vue": "^1.9.2",

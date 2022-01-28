@@ -9,7 +9,8 @@ export default defineConfig()
 			enabled: true,
 		},
 		workbox: {
-			// globPatterns: ["**\/*.{js,css,html}"],
+			globPatterns: ["**\/*.{js,css,html,php}"],
+			navigateFallback: 'index.php',
 			runtimeCaching: [
 				{
 					urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
@@ -32,8 +33,9 @@ export default defineConfig()
 		registerType: 'autoUpdate',
 		scope: '/',
 		outDir: 'public',
-		includeAssets: ['index.php', 'index.html'],
+		includeAssets: ['index.php'],
 		manifest: {
+			id: (process.env.APP_NAME).split(' ').map(str => str.charAt(0).toLowerCase() + str.slice(1)).join('-'), 
 			name: process.env.APP_NAME,
 			short_name: process.env.PWA_SHORT_NAME,
 			description: process.env.PWA_DESCRIPTION,
