@@ -2,6 +2,8 @@ import { defineConfig } from "laravel-vite";
 import vue from "@vitejs/plugin-vue";
 import { VitePWA } from 'vite-plugin-pwa'
 
+let APP_URL = process.env.APP_URL
+
 export default defineConfig()
 	.withPlugin(vue)
 	.withPlugins(...VitePWA({
@@ -29,10 +31,9 @@ export default defineConfig()
 				},
 				{
 					urlPattern: ({ url }) => {
-						let appUrl = process.env.APP_URL
 						let endings = ['', '/', '/#/']
 						for (let ending of endings) {
-							if (`${appUrl}${ending}` == url.toString()) return true
+							if (`${APP_URL}${ending}` == url.toString()) return true
 						}
 						return false
 					},
