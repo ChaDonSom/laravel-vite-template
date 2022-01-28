@@ -26,7 +26,7 @@
 		</div>
 
 		<div class="flex justify-center gap-5">
-			<Button @click="count++"> Count is: {{ count }}</Button>
+			<Button @click="count++" raised> Count is: {{ count }}</Button>
 			<Button @click="count++"> Count is: {{ count }}</Button>
 		</div>
 		<p>

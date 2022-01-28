@@ -1,6 +1,6 @@
 <template>
   <div class="mdc-touch-target-wrapper" ref="mainRef">
-    <button class="mdc-button mdc-button--touch mdc-button--raised">
+    <button class="mdc-button mdc-button--touch" :class="{ 'mdc-button--raised': raised }">
       <span class="mdc-button__ripple"></span>
       <span class="mdc-button__touch"></span>
       <span class="mdc-button__focus-ring"></span>
@@ -15,6 +15,9 @@ import { MDCRipple } from '@material/ripple'
 
 
 export default defineComponent({
+  props: {
+    raised: Boolean,
+  },
   setup() {
     const mainRef = ref<HTMLElement | null>(null)
     onMounted(() => {
