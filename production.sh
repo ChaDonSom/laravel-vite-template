@@ -2,8 +2,8 @@
 
 npm run build
 
-cp public/build/manifest.json public
 cp public/build/manifest.webmanifest public
+cp public/build/manifest.webmanifest public/manifest.json
 
 # All static assets must be listed here to show up
 cp public/build/*.png public
