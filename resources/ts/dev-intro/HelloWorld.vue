@@ -47,6 +47,7 @@ import { ref, defineComponent, reactive } from 'vue';
 import Button from '@/ts/core/buttons/Button.vue'
 import { breakpointsTailwind, useBreakpoints, useMediaQuery } from '@vueuse/core'
 import { vite_asset } from '@/ts/core/utilities/build'
+import workboxImage from '@/static/images/workbox-1.svg'
 
 export default defineComponent({
 	name: 'HelloWorld',
@@ -112,6 +113,11 @@ export default defineComponent({
 				title: 'Vue Use',
 				link: 'https://vueuse.org/',
 				image: 'https://d33wubrfki0l68.cloudfront.net/2f6479d73bc25170dc532dd42e059166573bf478/61057/favicon.svg'
+			},
+			{
+				title: 'Workbox',
+				link: 'https://developers.google.com/web/tools/workbox',
+				image: workboxImage,
 			},
 		])
 
