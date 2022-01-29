@@ -5,43 +5,20 @@ import { VitePWA } from 'vite-plugin-pwa'
 export default defineConfig()
 	.withPlugin(vue)
 	.withPlugins(...VitePWA({
+		strategies: 'injectManifest',
 		devOptions: {
-			enabled: false, // Enable to test the service worker
-		},
-		workbox: {
-			globPatterns: ["**\/*.{js,css,html,php}"],
-			cleanupOutdatedCaches: true,
-			navigateFallback: 'index.php',
-			runtimeCaching: [
-				{
-					urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
-					handler: 'CacheFirst',
-					options: {
-						cacheName: 'google-fonts-cache',
-						expiration: {
-							maxEntries: 10,
-							maxAgeSeconds: 60 * 60 * 24 * 365 // <== 365 days
-						},
-						cacheableResponse: {
-							statuses: [0, 200]
-						}
-					}
-				},
-				{
-					urlPattern: ({ url }) => {
-						console.log('url.pathname: ', url.pathname)
-						return url.pathname == '/' || url.pathname == ''
-					},
-					handler: 'NetworkOnly',
-				},
-			]
+			enabled: true, // Enable to test the service worker
+			type: 'module'
 		},
 		base: '/',
-		filename: process.env.APP_ENV == 'production' ? 'sw.js' : 'dev-sw.js',
+		filename: 'sw.js',
 		registerType: 'autoUpdate',
 		scope: '/',
 		outDir: 'public',
-		includeAssets: ['index.php'],
+		srcDir: 'resources/ts',
+		injectManifest: {
+			swDest: process.env.APP_ENV == 'production' ? 'public/sw.js' : 'public/dev-sw.js'
+		},
 		manifest: {
 			id: (process.env.APP_NAME).split(' ').map(str => str.charAt(0).toLowerCase() + str.slice(1)).join('-'), 
 			name: process.env.APP_NAME,

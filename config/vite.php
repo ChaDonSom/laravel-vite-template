@@ -15,6 +15,7 @@ return [
     'ignore_patterns' => [
         '/\\.d\\.ts$/',
         '/\\.json$/',
+        '/^sw\.js$/',
     ],
 
     /*
