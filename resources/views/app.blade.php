@@ -7,6 +7,7 @@
   <link rel="alternate icon" href="{{ vite_asset('/favicon.ico') }}" type="image/png" sizes="16x16">
   <link rel="apple-touch-icon" href="{{ vite_asset('/apple-touch-icon.png') }}" sizes="180x180">
   <meta name="theme-color" content="#ffddff">
+  <link rel="manifest" href="/manifest.json">
   <link rel="dns-prefetch" href="https://fonts.googleapis.com">
   <link rel="preconnect" crossorigin="anonymous" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
