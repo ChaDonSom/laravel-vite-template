@@ -8,6 +8,9 @@
         <span class="mdc-button__ripple"></span>
         <span class="mdc-button__touch"></span>
         <span class="mdc-button__focus-ring"></span>
+        <i class="material-icons mdc-button__icon" aria-hidden="true" v-if="$slots['leading-icon']">
+          <slot name="leading-icon" />
+        </i>
         <span class="mdc-button__label"><slot /></span>
       </button>
     </div>

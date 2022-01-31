@@ -1,4 +1,11 @@
 <template>
+	<div class="fixed top-1 left-1 flex z-10">
+		<transition name="auth-buttons" mode="out-in">
+			<RouterLink to="/" v-if="$route.name != 'index'">
+				<Button><template #leading-icon>home</template>Home</Button>
+			</RouterLink>
+		</transition>
+	</div>
 	<div class="fixed top-1 right-1 flex z-10">
 		<transition name="auth-buttons" mode="out-in">
 			<Button v-if="auth.authenticated" @click="auth.logout">Log out</Button>
