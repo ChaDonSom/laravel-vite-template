@@ -16,3 +16,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('app');
 });
+
+// TODO:
+/**
+ * If you choose to disable Fortify's views and you will be implementing password reset features for your application,
+ * you should still define a route named password.reset that is responsible for displaying your application's
+ * "reset password" view. This is necessary because Laravel's Illuminate\Auth\Notifications\ResetPassword
+ * notification will generate the password reset URL via the password.reset named route.
+ */

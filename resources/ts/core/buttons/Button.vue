@@ -1,11 +1,16 @@
 <template>
-  <div class="mdc-touch-target-wrapper" ref="mainRef">
-    <button class="mdc-button mdc-button--touch" :class="{ 'mdc-button--raised': raised }">
-      <span class="mdc-button__ripple"></span>
-      <span class="mdc-button__touch"></span>
-      <span class="mdc-button__focus-ring"></span>
-      <span class="mdc-button__label"><slot /></span>
-    </button>
+  <!--
+    The wrapping <div> allows us to apply Tailwind classes to our button, without MDC overwriting it.
+  -->
+  <div>
+    <div class="mdc-touch-target-wrapper" ref="mainRef">
+      <button class="mdc-button mdc-button--touch" :class="{ 'mdc-button--raised': raised }">
+        <span class="mdc-button__ripple"></span>
+        <span class="mdc-button__touch"></span>
+        <span class="mdc-button__focus-ring"></span>
+        <span class="mdc-button__label"><slot /></span>
+      </button>
+    </div>
   </div>
 </template>
 
@@ -38,4 +43,8 @@ export default defineComponent({
 @use "@/css/mdc-theme"; // modify styles to our specifications
 @use "@material/button/styles"; // apply all styles
 @use "@material/button"; // allow customizing, via @include button._____
+
+.mdc-button {
+  @include button.shape-radius(mdc-theme.$button-shape-radius);
+}
 </style>
