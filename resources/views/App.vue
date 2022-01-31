@@ -43,8 +43,15 @@
 <script setup lang="ts">
 import { useAuth } from '@/ts/core/users/auth';
 import Button from '@/ts/core/buttons/Button.vue';
+import { onMounted } from 'vue';
 
 const auth = useAuth()
+
+onMounted(() => {
+	if (!auth.authenticated || !auth.user) {
+		auth.getUser()
+	}
+})
 </script>
 
 <style scoped lang="scss">

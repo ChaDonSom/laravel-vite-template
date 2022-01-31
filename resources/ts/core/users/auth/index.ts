@@ -13,6 +13,16 @@ export const useAuth = defineStore('auth', {
             // We don't necessarily need to keep this in store, axios does.
             this.sanctumCookie = await axios.get('/sanctum/csrf-cookie')
         },
+        async getUser() {
+            try {
+                let response = await axios.get('/api/user')
+                this.user = response.data
+                this.authenticated = true
+            } catch(e: any) {
+                this.user = null
+                this.authenticated = false
+            }
+        },
         async register(form: { post: Function }) {
             let data = await form.post('/register')
             this.authenticated = true
@@ -22,11 +32,23 @@ export const useAuth = defineStore('auth', {
                 }
                 return Promise.reject(error)
             })
+            this.getUser()
             this.router.push({ name: 'index' })
         },
         async login(form: { post: Function }) {
-            let data = await form.post('/login')
-            this.authenticated = true
+            try {
+                let data = await form.post('/login')
+                this.authenticated = true
+                this.axiosResponseInterceptor = axios.interceptors.response.use(undefined, (error: any) => {
+                    if (error.response?.status == 419 || error.response?.status == 401) {
+                        this.unauthenticate()
+                    }
+                    return Promise.reject(error)
+                })
+                this.getUser()
+            } catch(e: any) {
+                this.unauthenticate()
+            }
             this.router.push({ name: 'index' })
         },
         async logout() {
