@@ -1,4 +1,12 @@
 <template>
+	<div class="fixed top-1 left-0 right-0 flex justify-center z-10">
+		<transition name="offline-toast" mode="out-in">
+			<div class="rounded-2xl bg-gray-200 px-3 py-2 flex items-center gap-2" v-if="!online && !down">
+				<i class="material-icons">offline_bolt</i>
+				Offline
+			</div>
+		</transition>
+	</div>
 	<div class="fixed top-1 left-1 flex z-10">
 		<transition name="auth-buttons" mode="out-in">
 			<RouterLink to="/" v-if="$route.name != 'index'">
@@ -43,9 +51,25 @@
 <script setup lang="ts">
 import { useAuth } from '@/ts/core/users/auth';
 import Button from '@/ts/core/buttons/Button.vue';
-import { onMounted } from 'vue';
+import { onMounted, ref, watch } from 'vue';
+import { useOnline, useScroll, useWindowScroll } from '@vueuse/core';
 
 const auth = useAuth()
+
+const online = useOnline()
+
+const { x, y } = useWindowScroll()
+let prevY = 0
+const down = ref(false)
+watch(y, () => {
+	if (y.value > prevY) {
+		down.value = true
+		prevY = y.value
+	} else {
+		down.value = false
+		prevY = y.value
+	}
+})
 
 onMounted(() => {
 	if (!auth.authenticated || !auth.user) {
@@ -69,5 +93,13 @@ onMounted(() => {
 }
 .auth-buttons-enter-active, .auth-buttons-leave-active {
 	transition: opacity 200ms ease-out, transform 200ms ease-out;
+}
+
+.offline-toast-enter-from, .offline-toast-leave-to {
+	opacity: 0;
+	transform: scale(0.9) translateY(-100px);
+}
+.offline-toast-enter-active, .offline-toast-leave-active {
+	transition: opacity 200ms ease-out, transform 300ms ease;
 }
 </style>

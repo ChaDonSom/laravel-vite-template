@@ -6,13 +6,6 @@
 			</div>
 			<h1 class="text-3xl sm:text-5xl md:text-7xl font-thin">{{ msg }}</h1>
 
-			<div class="flex justify-center m-2">
-				<p class="bg-gray-200 rounded-xl px-3 py-1">
-					<a href="https://vitejs.dev/guide/features.html" target="_blank">Vite Docs</a> |
-					<a href="https://v3.vuejs.org/" target="_blank">Vue 3 Docs</a>
-				</p>
-			</div>
-
 			<h2 class="mt-5">Material Components:</h2>
 			<div class="flex justify-center gap-5">
 				<Button @click="count++" raised> Count is: {{ count }}</Button>
