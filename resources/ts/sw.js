@@ -19,7 +19,7 @@ registerRoute(
         plugins: [
             new ExpirationPlugin({
                 maxEntries: 10,
-                maxAgeSeconds: 31536e3,
+                maxAgeSeconds: 31536e3, // a year
             }),
             new CacheableResponsePlugin({ statuses: [0, 200] }),
         ],
@@ -27,6 +27,19 @@ registerRoute(
     "GET"
 );
 
+registerRoute(
+    /^https:\/\/laravel-vite\.innocenzi\.dev\/logo\.svg|https:\/\/v3\.vuejs\.org\/logo\.png|https:\/\/pinia\.vuejs\.org\/logo\.svg/i,
+    new CacheFirst({
+        cacheName: "icons-cache",
+        plugins: [
+            new ExpirationPlugin({
+                maxEntries: 5,
+                maxAgeSeconds: 31536e3, // a year
+            }),
+            new CacheableResponsePlugin({ statuses: [0, 200] }),
+        ]
+    })
+);
 
 registerRoute(
     ({ url: e }) => ("/" == e.pathname || "" == e.pathname),
@@ -34,11 +47,25 @@ registerRoute(
         cacheName: "index-page-cache",
         plugins: [
             new ExpirationPlugin({
-                maxEntries: 10,
-                maxAgeSeconds: 31536e3,
+                maxEntries: 5,
+                maxAgeSeconds: 31536e3, // a year
             }),
             new CacheableResponsePlugin({ statuses: [0, 200] }),
         ],
     }),
     "GET"
+);
+
+registerRoute(
+    ({ url: e }) => "/api/user" == e.pathname || "api/user" == e.pathname,
+    new NetworkFirst({
+        cacheName: "user-cache",
+        plugins: [
+            new ExpirationPlugin({
+                maxEntries: 1,
+                maxAgeSeconds: 60 * 60 * 24, // 24 hours
+            }),
+            new CacheableResponsePlugin({ statuses: [0, 200] }),
+        ],
+    })
 );
