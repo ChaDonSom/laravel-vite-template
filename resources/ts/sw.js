@@ -28,9 +28,9 @@ registerRoute(
 );
 
 registerRoute(
-    /^https:\/\/laravel-vite\.innocenzi\.dev\/logo\.svg|https:\/\/v3\.vuejs\.org\/logo\.png|https:\/\/pinia\.vuejs\.org\/logo\.svg/i,
+    /\/build\/assets\/.*|^https:\/\/laravel-vite\.innocenzi\.dev\/logo\.svg|^https:\/\/v3\.vuejs\.org\/logo\.png|^https:\/\/pinia\.vuejs\.org\/logo\.svg/i,
     new CacheFirst({
-        cacheName: "icons-cache",
+        cacheName: "assets-cache",
         plugins: [
             new ExpirationPlugin({
                 maxEntries: 5,
