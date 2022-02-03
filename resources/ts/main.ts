@@ -16,7 +16,10 @@ import { store } from '@/ts/store'
 import '@/css/app.css'
 import { registerSW } from 'virtual:pwa-register'
 import LogRocket from 'logrocket'
-LogRocket.init('asagxd/template')
+const logrocketProject = import.meta.env.VITE_LOGROCKET_PROJECT
+if (logrocketProject && typeof logrocketProject == 'string') {
+    LogRocket.init(logrocketProject)
+}
 
 const updateSW = registerSW({
     onNeedRefresh() {
