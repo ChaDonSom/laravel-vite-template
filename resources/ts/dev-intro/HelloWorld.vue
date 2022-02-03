@@ -43,6 +43,7 @@ import Button from '@/ts/core/buttons/Button.vue'
 import { breakpointsTailwind, useBreakpoints, useMediaQuery } from '@vueuse/core'
 import { vite_asset } from '@/ts/core/utilities/build'
 import workboxImage from '@/static/images/workbox-1.svg'
+import logrocketImage from '@/static/images/logrocket-1.png'
 import { useAuth } from '../core/users/auth';
 
 const props = defineProps({
@@ -111,6 +112,11 @@ const stack = ref([
 		title: 'Workbox',
 		link: 'https://developers.google.com/web/tools/workbox',
 		image: workboxImage,
+	},
+	{
+		title: 'LogRocket',
+		link: 'https://app.logrocket.com',
+		image: logrocketImage,
 	},
 ])
 </script>
