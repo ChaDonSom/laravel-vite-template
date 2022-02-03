@@ -5,7 +5,7 @@ import authRoutes from '@/ts/router/auth'
 let routes: RouteRecordRaw[] = [
     {
         name: 'index', path: '/', component: HelloWorld, props: {
-            msg: 'Hello Laravel + Vue'
+            msg: 'Hello Laravel + Vite'
         }
     }
 ]

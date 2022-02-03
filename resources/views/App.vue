@@ -16,7 +16,9 @@
 	</div>
 	<div class="fixed top-1 right-1 flex z-10">
 		<transition name="auth-buttons" mode="out-in">
-			<Button v-if="auth.authenticated" @click="auth.logout">Log out</Button>
+			<div v-if="auth.authenticated">
+				<Button @click="auth.logout">Log out</Button>
+			</div>
 			<div v-else class="flex">
 				<transition name="auth-buttons" mode="out-in">
 					<div v-if="$route.name == 'login'">
@@ -79,27 +81,5 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
-.page-navigation-enter-from, .page-navigation-leave-to {
-	opacity: 0;
-	transform: scale(0.97);
-}
-.page-navigation-enter-active, .page-navigation-leave-active {
-	transition: opacity 150ms ease-out, transform 150ms ease-out;
-}
-
-.auth-buttons-enter-from, .auth-buttons-leave-to {
-	opacity: 0;
-	transform: scale(0.9);
-}
-.auth-buttons-enter-active, .auth-buttons-leave-active {
-	transition: opacity 200ms ease-out, transform 200ms ease-out;
-}
-
-.offline-toast-enter-from, .offline-toast-leave-to {
-	opacity: 0;
-	transform: scale(0.9) translateY(-100px);
-}
-.offline-toast-enter-active, .offline-toast-leave-active {
-	transition: opacity 200ms ease-out, transform 300ms ease;
-}
+@use "@/css/transitions";
 </style>

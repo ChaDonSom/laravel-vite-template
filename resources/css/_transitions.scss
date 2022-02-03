@@ -1,0 +1,32 @@
+
+.page-navigation-enter-from, .page-navigation-leave-to {
+	opacity: 0;
+	transform: scale(0.97);
+}
+.page-navigation-enter-active, .page-navigation-leave-active {
+	transition: opacity 150ms ease-out, transform 150ms ease-out;
+}
+
+.auth-buttons-enter-from, .auth-buttons-leave-to {
+	opacity: 0;
+	transform: scale(0.9);
+}
+.auth-buttons-enter-active, .auth-buttons-leave-active {
+	transition: opacity 200ms ease-out, transform 200ms ease-out;
+}
+
+.offline-toast-enter-from, .offline-toast-leave-to {
+	opacity: 0;
+	transform: scale(0.9) translateY(-100px);
+}
+.offline-toast-enter-active, .offline-toast-leave-active {
+	transition: opacity 200ms ease-out, transform 300ms ease;
+}
+
+.error-message-enter-from, .error-message-leave-to {
+  opacity: 0;
+  transform: scale(0.9);
+}
+.error-message-enter-active, .error-message-leave-active {
+	transition: opacity 200ms ease-out, transform 200ms ease;
+}

@@ -39,3 +39,7 @@ const form = forms.newForm({
   remember: false,
 })
 </script>
+
+<style scoped lang="scss">
+@use "@/css/transitions";
+</style>

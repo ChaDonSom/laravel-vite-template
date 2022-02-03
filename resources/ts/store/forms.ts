@@ -109,6 +109,7 @@ export function useForm(...args: any[]) {
           else errors.message = e.toString()
         }
         this.clearErrors().setError(errors)
+        throw errors
       }
 
       const onSuccess = (response?: AxiosResponse) => {

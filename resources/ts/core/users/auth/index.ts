@@ -24,16 +24,21 @@ export const useAuth = defineStore('auth', {
             }
         },
         async register(form: { post: Function }) {
-            let data = await form.post('/register')
-            this.authenticated = true
-            this.axiosResponseInterceptor = axios.interceptors.response.use(undefined, (error: any) => {
-                if (error.response?.status == 419 || error.response?.status == 401) {
-                    this.unauthenticate()
-                }
-                return Promise.reject(error)
-            })
-            this.getUser()
-            this.router.push({ name: 'index' })
+            try {
+                let data = await form.post('/register')
+                this.authenticated = true
+                this.axiosResponseInterceptor = axios.interceptors.response.use(undefined, (error: any) => {
+                    if (error.response?.status == 419 || error.response?.status == 401) {
+                        this.unauthenticate()
+                        this.router.push({ name: 'index' })
+                    }
+                    return Promise.reject(error)
+                })
+                this.getUser()
+                this.router.push({ name: 'index' })
+            } catch (e: any) {
+                this.unauthenticate()
+            }
         },
         async login(form: { post: Function }) {
             try {
@@ -42,19 +47,21 @@ export const useAuth = defineStore('auth', {
                 this.axiosResponseInterceptor = axios.interceptors.response.use(undefined, (error: any) => {
                     if (error.response?.status == 419 || error.response?.status == 401) {
                         this.unauthenticate()
+                        this.router.push({ name: 'index' })
                     }
                     return Promise.reject(error)
                 })
                 this.getUser()
+                this.router.push({ name: 'index' })
             } catch(e: any) {
                 this.unauthenticate()
             }
-            this.router.push({ name: 'index' })
         },
         async logout() {
             try {
                 let response = await axios.post('/logout')
                 this.unauthenticate()
+                this.router.push({ name: 'index' })
             } catch (e: any) {
                 console.error(e)
             }
@@ -65,7 +72,6 @@ export const useAuth = defineStore('auth', {
             if (this.axiosResponseInterceptor) {
                 axios.interceptors.response.eject(this.axiosResponseInterceptor)
             }
-            this.router.push({ name: 'index' })
         }
     }
 })
