@@ -1,9 +1,10 @@
 import axios from "axios";
 import { defineStore } from "pinia";
+import LogRocket from "logrocket";
 
 export const useAuth = defineStore('auth', {
     state: () => ({
-        user: null,
+        user: <{ id: number, [key: string]: any } | null> null,
         sanctumCookie: null,
         authenticated: false,
         axiosResponseInterceptor: <number | null> null,
@@ -18,6 +19,9 @@ export const useAuth = defineStore('auth', {
                 let response = await axios.get('/api/user')
                 this.user = response.data
                 this.authenticated = true
+
+                // Identify the authenticated user to LogRocket
+                if (this.user?.id) LogRocket.identify(String(this.user.id), this.user)
             } catch(e: any) {
                 this.user = null
                 this.authenticated = false

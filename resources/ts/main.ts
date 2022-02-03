@@ -15,6 +15,8 @@ import { router } from '@/ts/router'
 import { store } from '@/ts/store'
 import '@/css/app.css'
 import { registerSW } from 'virtual:pwa-register'
+import LogRocket from 'logrocket'
+LogRocket.init('asagxd/template')
 
 const updateSW = registerSW({
     onNeedRefresh() {
