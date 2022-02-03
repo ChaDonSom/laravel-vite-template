@@ -14,6 +14,7 @@ import App from '@/views/App.vue'
 import { router } from '@/ts/router'
 import { store } from '@/ts/store'
 import '@/css/app.css'
+// @ts-ignore
 import { registerSW } from 'virtual:pwa-register'
 import LogRocket from 'logrocket'
 const logrocketProject = import.meta.env.VITE_LOGROCKET_PROJECT
@@ -28,7 +29,7 @@ const updateSW = registerSW({
     onOfflineReady() {
         console.log("Offline ready.")
     },
-    onRegisterError(error) {
+    onRegisterError(error: any) {
         console.error(error)
     }
 })

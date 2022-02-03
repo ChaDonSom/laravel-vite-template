@@ -4,6 +4,7 @@ import { registerRoute } from 'workbox-routing'
 import { CacheFirst, NetworkFirst } from 'workbox-strategies'
 import { ExpirationPlugin } from 'workbox-expiration'
 import { CacheableResponsePlugin } from 'workbox-cacheable-response'
+import Pusher from "pusher-js/worker";
 
 self.skipWaiting()
 clientsClaim()

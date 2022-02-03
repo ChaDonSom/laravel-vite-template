@@ -18,6 +18,7 @@
 				<i class="material-icons">keyboard_hide</i>
 			</div>
 			<div class="my-7">
+				{{ messages }}
 				<h2 class="text-3xl sm:text-5xl md:text-6xl font-thin mb-3">Stack</h2>
 				<div class="flex flex-row flex-wrap align-center justify-center gap-5">
 					<a
@@ -38,13 +39,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineComponent, reactive } from 'vue';
+import { ref, defineComponent, reactive, onMounted } from 'vue';
 import Button from '@/ts/core/buttons/Button.vue'
 import { breakpointsTailwind, useBreakpoints, useMediaQuery } from '@vueuse/core'
 import { vite_asset } from '@/ts/core/utilities/build'
 import workboxImage from '@/static/images/workbox-1.svg'
 import logrocketImage from '@/static/images/logrocket-1.png'
 import { useAuth } from '../core/users/auth';
+import { useEcho } from '../store/echo';
 
 const props = defineProps({
 		msg: {
@@ -119,6 +121,15 @@ const stack = ref([
 		image: logrocketImage,
 	},
 ])
+
+const messages = ref([])
+const echo = useEcho()
+onMounted(() => {
+	echo.echo.channel('my-channel').listen('my-event', data => {
+		console.log('data: ', data)
+		messages.value.push(data)
+	})
+})
 </script>
 
 <style scoped lang="scss">
