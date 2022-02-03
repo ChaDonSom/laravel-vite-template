@@ -18,7 +18,7 @@
 				<i class="material-icons">keyboard_hide</i>
 			</div>
 			<div class="my-7">
-				{{ messages }}
+				<p v-for="message of messages" :key="message">{{ message }}</p>
 				<h2 class="text-3xl sm:text-5xl md:text-6xl font-thin mb-3">Stack</h2>
 				<div class="flex flex-row flex-wrap align-center justify-center gap-5">
 					<a
@@ -125,7 +125,9 @@ const stack = ref([
 const messages = ref([])
 const echo = useEcho()
 onMounted(() => {
-	echo.echo.channel('my-channel').listen('my-event', data => {
+	// The '.' in '.my-event' means we'll listen on 'my-channel' instead of 'App\Events.my-channel'
+	// That way, we can mess around with this from the Pusher event creator
+	echo.echo.channel('my-channel').listen('.my-event', data => {
 		console.log('data: ', data)
 		messages.value.push(data)
 	})
