@@ -45,6 +45,7 @@ import { breakpointsTailwind, useBreakpoints, useMediaQuery } from '@vueuse/core
 import { vite_asset } from '@/ts/core/utilities/build'
 import workboxImage from '@/static/images/workbox-1.svg'
 import logrocketImage from '@/static/images/logrocket-1.png'
+import pusherImage from '@/static/images/pusher-1.png'
 import { useAuth } from '../core/users/auth';
 import { useEcho } from '../store/echo';
 
@@ -119,6 +120,11 @@ const stack = ref([
 		title: 'LogRocket',
 		link: 'https://app.logrocket.com',
 		image: logrocketImage,
+	},
+	{
+		title: 'Pusher',
+		link: 'https://pusher.com',
+		image: pusherImage,
 	},
 ])
 
