@@ -21,8 +21,21 @@ const logrocketProject = import.meta.env.VITE_LOGROCKET_PROJECT
 if (logrocketProject && typeof logrocketProject == 'string') {
     LogRocket.init(logrocketProject)
 }
+import * as PusherPushNotifications from "@pusher/push-notifications-web";
 
 const updateSW = registerSW({
+    onRegistered(registration: ServiceWorkerRegistration) {
+        const beamsClient = new PusherPushNotifications.Client({
+            instanceId: "01b6e1af-a514-45f6-bfe7-f9cd88f1296f",
+            serviceWorkerRegistration: registration,
+        });
+        beamsClient.start().then(() => {
+            beamsClient.addDeviceInterest('debug-hello')
+            console.log('added device interest "debug-hello"!')
+            // Build something beatiful 🌈
+        });
+
+    },
     onNeedRefresh() {
         if (confirm("New content, refresh please.")) window.location.reload()
     },

@@ -8,7 +8,7 @@ export default defineConfig()
 		strategies: 'injectManifest',
 		devOptions: {
 			enabled: false, // Enable to test the service worker
-			type: 'module'
+			type: 'classic'
 		},
 		base: '/',
 		filename: 'sw.js',

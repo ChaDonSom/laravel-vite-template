@@ -1,11 +1,14 @@
-import { precacheAndRoute, cleanupOutdatedCaches } from 'workbox-precaching'
-import { clientsClaim } from 'workbox-core'
-import { registerRoute } from 'workbox-routing'
-import { CacheFirst, NetworkFirst } from 'workbox-strategies'
-import { ExpirationPlugin } from 'workbox-expiration'
-import { CacheableResponsePlugin } from 'workbox-cacheable-response'
+importScripts("https://storage.googleapis.com/workbox-cdn/releases/6.2.0/workbox-sw.js");
+
+const { precacheAndRoute, cleanupOutdatedCaches } = workbox.precaching
+const { clientsClaim } = workbox.core
+const { registerRoute } = workbox.routing
+const { CacheFirst, NetworkFirst } = workbox.strategies
+const { ExpirationPlugin } = workbox.expiration
+const { CacheableResponsePlugin } = workbox.cacheableResponse
 // import Pusher from "pusher-js/worker";
-importScripts("https://js.pusher.com/7.0/pusher.worker.min.js");
+// importScripts("https://js.pusher.com/7.0/pusher.worker.min.js");
+importScripts("https://js.pusher.com/beams/service-worker.js");
 
 self.skipWaiting()
 clientsClaim()
