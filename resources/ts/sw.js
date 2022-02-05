@@ -33,7 +33,7 @@ registerRoute(
 );
 
 registerRoute(
-    /\/build\/assets\/.*|^https:\/\/laravel-vite\.innocenzi\.dev\/logo\.svg|^https:\/\/v3\.vuejs\.org\/logo\.png|^https:\/\/pinia\.vuejs\.org\/logo\.svg/i,
+    /\/build\/assets\/.*/i,
     new CacheFirst({
         cacheName: "assets-cache",
         plugins: [
@@ -43,6 +43,32 @@ registerRoute(
             }),
             new CacheableResponsePlugin({ statuses: [0, 200] }),
         ]
+    })
+);
+
+// The external icons
+let iconUrls = [
+    "https://laravel.com/img/logomark.min.svg",
+    "https://laravel-vite.innocenzi.dev/logo.svg",
+    "https://v3.vuejs.org/logo.png",
+    "https://vitejs.dev/logo.svg",
+    "https://pinia.vuejs.org/logo.svg",
+    "https://upload.wikimedia.org/wikipedia/commons/4/4c/Typescript_logo_2020.svg",
+    "https://pbs.twimg.com/profile_images/1468993891584073729/a_op8KnL_400x400.jpg",
+    "https://pbs.twimg.com/profile_images/925576484122779648/ucVTUoPg_400x400.jpg",
+    "https://d33wubrfki0l68.cloudfront.net/2f6479d73bc25170dc532dd42e059166573bf478/61057/favicon.svg",
+];
+registerRoute(
+    ({ url: e }) => iconUrls.includes(e.href),
+    new CacheFirst({
+        cacheName: "external-cache",
+        plugins: [
+            new ExpirationPlugin({
+                maxEntries: 5,
+                maxAgeSeconds: 31536e3, // a year
+            }),
+            new CacheableResponsePlugin({ statuses: [0, 200] }),
+        ],
     })
 );
 

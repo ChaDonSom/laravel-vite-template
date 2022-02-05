@@ -12,6 +12,12 @@
 
 &nbsp;
 
+<a href="https://vitejs.dev" target="_blank" title="Vite">
+    <img src="https://vitejs.dev/logo.svg" height="55">
+</a> Vite gets our development server running - our finger on the pulse - in a split second, and hot-reloads faster than you can <code>alt+tab</code>.
+
+&nbsp;
+
 <a href="https://v3.vuejs.org/" target="_blank" title="Vue 3">
     <img src="https://v3.vuejs.org/logo.png" height="55">
 </a> Vue 3 is powerful, fast, and lends itself to clean organization through its Composition API.
@@ -24,15 +30,21 @@
 
 &nbsp;
 
+<a href="https://vueuse.org/" target="_blank" title="Vue 3">
+    <img src="https://d33wubrfki0l68.cloudfront.net/2f6479d73bc25170dc532dd42e059166573bf478/61057/favicon.svg" height="55">
+</a> VueUse is an awesome library of <code>use</code> functions for Vue 3 Composition API that allow us to access many browser APIs reactively.
+
+&nbsp;
+
 <a href="https://www.typescriptlang.org/" target="_blank" title="Vue 3">
     <img src="https://upload.wikimedia.org/wikipedia/commons/4/4c/Typescript_logo_2020.svg" height="55">
 </a> TypeScript allows us to remember what goes where - it gives us code intellisense.
 
 &nbsp;
 
-<a href="https://vitejs.dev" target="_blank" title="Vite">
-    <img src="https://vitejs.dev/logo.svg" height="55">
-</a> Vite gets our development server running - our finger on the pulse - in a split second, and hot-reloads faster than you can <code>alt+tab</code>.
+<a href="https://developers.google.com/web/tools/workbox" target="_blank" title="Workbox">
+    <img src="https://cdn.worldvectorlogo.com/logos/workbox-1.svg" height="55">
+</a> Workbox handles the complexity of our Service Worker for us, allowing us to run code in the background while our app is closed.
 
 &nbsp;
 
@@ -63,3 +75,22 @@
 <a href="https://pusher.com" target="_blank" title="Pusher">
     <img src="https://avatars.githubusercontent.com/u/739550?s=200&v=4" height="55">
 </a> Pusher allows us to utilize websocket connections, for things like live updates, as well as push notifications, to let users know when something happens and they're not in the app.
+
+&nbsp;
+
+&nbsp;
+
+# Get started
+
+```bash
+npm start
+```
+
+Or, if you want background tasks for each process:
+```bash
+php artisan serve & # the Laravel server
+
+php artisan queue:listen & # if you'd like to run Laravel queue jobs
+
+npm run dev & # the Vite server
+```

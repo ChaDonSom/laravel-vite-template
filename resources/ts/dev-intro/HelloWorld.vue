@@ -96,6 +96,11 @@ const stack = ref([
 		image: 'https://vitejs.dev/logo.svg'
 	},
 	{
+		title: 'TypeScript',
+		link: 'https://www.typescriptlang.org/',
+		image: 'https://upload.wikimedia.org/wikipedia/commons/4/4c/Typescript_logo_2020.svg'
+	},
+	{
 		title: 'Pinia',
 		link: 'https://pinia.vuejs.org/',
 		image: 'https://pinia.vuejs.org/logo.svg'
