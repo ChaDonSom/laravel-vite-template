@@ -83,6 +83,8 @@
 # Get started
 
 ```bash
+composer install
+npm install
 npm start
 ```
 
