@@ -12,11 +12,13 @@
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "innocenzi/laravel-vite": "^0.1.16",
+        "laravel-notification-channels/pusher-push-notifications": "^2.3",
         "laravel/fortify": "^1.10",
         "laravel/framework": "^8.75",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
-        "pusher/pusher-php-server": "^7.0"
+        "pusher/pusher-php-server": "^7.0",
+        "pusher/pusher-push-notifications": "^1.1"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

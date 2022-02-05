@@ -34,6 +34,9 @@
 					</a>
 				</div>
 			</div>
+			<div class="my-7" v-if="auth.authenticated">
+				<Button @click="sendPushNotification">Send myself a push notification</Button>
+			</div>
 		</div>
 	</div>
 </template>
@@ -48,6 +51,7 @@ import logrocketImage from '@/static/images/logrocket-1.png'
 import pusherImage from '@/static/images/pusher-1.png'
 import { useAuth } from '../core/users/auth';
 import { useEcho } from '../store/echo';
+import axios from 'axios';
 
 const props = defineProps({
 		msg: {
@@ -138,6 +142,13 @@ onMounted(() => {
 		messages.value.push(data)
 	})
 })
+
+function sendPushNotification() {
+	axios.post('/api/beams/self-notification', {
+		title: 'Hello World!',
+		message: 'Hi there, a notification from Laravel Vite Template!'
+	})
+}
 </script>
 
 <style scoped lang="scss">

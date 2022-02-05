@@ -12,6 +12,8 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    public $pushNotificationType = "users"; // Used in PusherChannel to form $beamsClient->'publishToUsers'
+
     /**
      * The attributes that are mass assignable.
      *

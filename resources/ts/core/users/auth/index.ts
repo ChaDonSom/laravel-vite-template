@@ -1,11 +1,12 @@
 import axios from "axios";
 import { defineStore } from "pinia";
 import LogRocket from "logrocket";
+import { useBeams } from "@/ts/store/beams";
 
 export const useAuth = defineStore('auth', {
     state: () => ({
         user: <{ id: number, [key: string]: any } | null> null,
-        sanctumCookie: null,
+        sanctumCookie: null as string | null,
         authenticated: false,
         axiosResponseInterceptor: <number | null> null,
     }),
@@ -20,8 +21,31 @@ export const useAuth = defineStore('auth', {
                 this.user = response.data
                 this.authenticated = true
 
-                // Identify the authenticated user to LogRocket
-                if (this.user?.id) LogRocket.identify(String(this.user.id), this.user)
+                if (this.user?.id) {
+                    // Identify the authenticated user to LogRocket
+                    LogRocket.identify(String(this.user.id), this.user)
+
+                    // Subscribe to Push Notifications aimed at the user
+                    const beams = useBeams()
+                    beams.newTokenProvider({
+                        url: "/api/beams/token",
+                        queryParams: {
+                            user_id: String(this.user.id), // URL query params your auth endpoint needs
+                        },
+                        headers: this.sanctumCookie ? {
+                            'X-XSRF-TOKEN': this.sanctumCookie
+                        } : undefined,
+                    });
+                    console.log('beams.tokenProvider: ', beams.tokenProvider);
+                    console.log('beams.beams: ', beams.beams);
+                    if (!beams.started) beams.start()
+                    beams.waitTillStarted().then(() => {
+                        if (this.user && beams.tokenProvider) {
+                            beams.beams?.setUserId(`App.Models.User.${this.user.id}`, beams.tokenProvider)
+                            console.log('set user id to ', `App.Models.User.${this.user.id}`)
+                        }
+                    })
+                }
             } catch(e: any) {
                 this.user = null
                 this.authenticated = false
@@ -75,6 +99,10 @@ export const useAuth = defineStore('auth', {
             this.authenticated = false
             if (this.axiosResponseInterceptor) {
                 axios.interceptors.response.eject(this.axiosResponseInterceptor)
+            }
+            const beams = useBeams()
+            if (beams.beams) {
+                beams.stop().catch(error => console.error(error))
             }
         }
     }
