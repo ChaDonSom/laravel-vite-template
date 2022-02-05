@@ -7,7 +7,7 @@ export default defineConfig()
 	.withPlugins(...VitePWA({
 		strategies: 'injectManifest',
 		devOptions: {
-			enabled: true, // Enable to test the service worker
+			enabled: false, // Enable to test the service worker
 			type: 'classic'
 		},
 		base: '/',
