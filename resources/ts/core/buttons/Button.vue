@@ -4,7 +4,13 @@
   -->
   <div>
     <div class="mdc-touch-target-wrapper" ref="mainRef">
-      <button class="mdc-button mdc-button--touch" :class="{ 'mdc-button--raised': raised }">
+      <button
+          class="mdc-button mdc-button--touch"
+          :class="{
+            'mdc-button--raised': raised,
+            'secondary': secondary
+          }"
+      >
         <span class="mdc-button__ripple"></span>
         <span class="mdc-button__touch"></span>
         <span class="mdc-button__focus-ring"></span>
@@ -25,6 +31,7 @@ import { MDCRipple } from '@material/ripple'
 export default defineComponent({
   props: {
     raised: Boolean,
+    secondary: Boolean,
   },
   setup() {
     const mainRef = ref<HTMLElement | null>(null)
@@ -49,5 +56,17 @@ export default defineComponent({
 
 .mdc-button {
   @include button.shape-radius(mdc-theme.$button-shape-radius);
+  &.secondary {
+    @include button.ink-color(mdc-theme.$secondary);
+    .mdc-button__ripple::before, .mdc-button__ripple::after {
+      --mdc-text-button-hover-state-layer-color: #{mdc-theme.$secondary};
+    }
+  }
+  &.mdc-button--raised {
+    @include button.filled-accessible(mdc-theme.$primary);
+    &.secondary {
+      @include button.filled-accessible(mdc-theme.$secondary);
+    }
+  }
 }
 </style>
