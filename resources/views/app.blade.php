@@ -17,7 +17,7 @@
   <link rel="icon" type="image/png" sizes="16x16" href="{{ vite_asset('/favicon-16x16.png') }}">
   <link rel="mask-icon" href="{{ vite_asset('/safari-pinned-tab.svg') }}" color="#875bd5">
   <meta name="msapplication-TileColor" content="#da532c">
-  <title>Laravel Vite Template</title>
+  <title>{{ config('app.name') }}</title>
   @vite
 </head>
 <body class="antialiased">
