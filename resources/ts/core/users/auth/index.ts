@@ -9,6 +9,9 @@ export const useAuth = defineStore('auth', {
         sanctumCookie: null as string | null,
         authenticated: false,
         axiosResponseInterceptor: <number | null> null,
+        guestRoutes: <string[]> [
+            '/', '/login', '/register'
+        ]
     }),
     actions: {
         async getSanctumCookie() {
@@ -47,8 +50,10 @@ export const useAuth = defineStore('auth', {
                     })
                 }
             } catch(e: any) {
-                this.user = null
-                this.authenticated = false
+                this.unauthenticate()
+                if (!this.guestRoutes.includes(this.router.currentRoute.value.path)) {
+                    this.router.push({ name: 'index' })
+                }
             }
         },
         async register(form: { post: Function }) {
