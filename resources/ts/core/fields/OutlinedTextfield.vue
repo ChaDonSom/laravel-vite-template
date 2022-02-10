@@ -9,6 +9,7 @@
         <span class="mdc-notched-outline__trailing"></span>
       </span>
       <input
+          :id="`textfield-input-${id}`"
           :type="type ?? 'text'"
           class="mdc-text-field__input"
           :aria-labelledby="`textfield-label-${id}`"
@@ -72,5 +73,11 @@ onMounted(() => {
 *::after {
   border-width: 1px;
   border-style: none;
+}
+
+// For some reason, if we don't have this, date-type inputs don't show the calendar icon
+input[type="date"]::-webkit-calendar-picker-indicator {
+    display: block;
+    -webkit-appearance: button;
 }
 </style>
