@@ -1,24 +1,32 @@
 import { defineStore } from "pinia";
 import { isEqual, cloneDeep } from 'lodash'
 import { reactive, watch } from 'vue'
-import { useStorage } from "@vueuse/core";
+import { RemovableRef, useStorage } from "@vueuse/core";
 import axios, { AxiosResponse, AxiosStatic } from 'axios'
 
 export function useForm(...args: any[]) {
-  const rememberKey = typeof args[0] === 'string' ? args[0] : null
-  const data = (typeof args[0] === 'string' ? args[1] : args[0]) || {}
-  const restored = rememberKey ? useStorage(rememberKey, data) : null
+  const rememberKey = typeof args[0] === 'string' ? args[0] : args[0]?.formId ?? args[0]?.id ?? null
+  type FormData = {
+    data: {},
+    errors: {},
+  }
+  const data: FormData = (typeof args[0] === 'string' ? args[1] : args[0]) || {}
+  const restored: RemovableRef<FormData> | null = rememberKey ? useStorage(rememberKey, data) : null
   let defaults = cloneDeep(data)
   let cancelToken: any | null = null
   let recentlySuccessfulTimeoutId: number | undefined = undefined
   let transform = (data: { [key: string]: any }): { [key: string]: any } => data
 
   let form = reactive({
-    ...restored?.value ? restored?.value.data : data,
+    ...(restored?.value?.data ? restored.value.data : data),
     isDirty: false,
-    errors: restored?.value ? restored?.value.errors : {},
+    errors: restored?.value?.errors ? restored.value.errors : {},
     hasErrors: false,
     processing: false,
+    processingDelete: false,
+    processingNotDelete() {
+      return this.processing && !this.processingDelete
+    },
     progress: null,
     wasSuccessful: false,
     recentlySuccessful: false,
@@ -86,16 +94,18 @@ export function useForm(...args: any[]) {
 
       return this
     },
-    async submit(method: string, url: string, options: { [key: string]: any } = {}) {
+    async submit(method: string, url: string) {
       const data = transform(this.data())
 
       this.processing = true
+      if (method == 'delete') this.processingDelete = true
       this.wasSuccessful = false
       this.recentlySuccessful = false
       clearTimeout(recentlySuccessfulTimeoutId)
 
       const onError = (e: any) => {
         this.processing = false
+        this.processingDelete = false
         this.progress = null
         let data = e.response?.data
         let status = e.response?.status
@@ -114,6 +124,7 @@ export function useForm(...args: any[]) {
 
       const onSuccess = (response?: AxiosResponse) => {
         this.processing = false
+        this.processingDelete = false
         this.progress = null
         this.clearErrors()
         this.wasSuccessful = true
@@ -137,20 +148,20 @@ export function useForm(...args: any[]) {
         return onError(e)
       }
     },
-    get(url: string, options: { [key: string]: any }) {
-      return this.submit('get', url, options)
+    get(url: string) {
+      return this.submit('get', url)
     },
-    post(url: string, options: { [key: string]: any }) {
-      return this.submit('post', url, options)
+    post(url: string) {
+      return this.submit('post', url)
     },
-    put(url: string, options: { [key: string]: any }) {
-      return this.submit('put', url, options)
+    put(url: string) {
+      return this.submit('put', url)
     },
-    patch(url: string, options: { [key: string]: any }) {
-      return this.submit('patch', url, options)
+    patch(url: string) {
+      return this.submit('patch', url)
     },
-    delete(url: string, options: { [key: string]: any }) {
-      return this.submit('delete', url, options)
+    delete(url: string) {
+      return this.submit('delete', url)
     },
     cancel() {
       if (cancelToken) {
@@ -170,27 +181,36 @@ export function useForm(...args: any[]) {
   watch(form, newValue => {
     form.isDirty = !isEqual(form.data(), defaults)
     // I'm assuming useStorage() will take care of the 'remember in storage' functionality automatically
-    // if (rememberKey) {
-    //   Inertia.remember(cloneDeep(newValue.__remember()), rememberKey)
-    // }
+    if (rememberKey) {
+      if (restored) restored.value = newValue.__remember()
+    }
   }, { immediate: true, deep: true })
 
   return form
 }
 
+export type Form<T> = ReturnType<typeof useForm> & {
+  [Property in keyof T]: T[Property]
+}
+
 export const useForms = defineStore('forms', {
   state: () => ({
-    data: {} as { [key: string]: any }
+    data: {} as { [key: string | number]: any }
   }),
   getters: {
-    getById: (state) => (id: string) => {
+    getById: (state) => (id: string | number) => {
       return state.data[id]
     }
   },
   actions: {
-    newForm(form: { id: string, [key: string]: any }) {
-      this.data[form.id] = useForm(form)
-      return this.data[form.id]
+    newForm(form: { id?: string | number, formId?: string, [key: string]: any }) {
+      let id: string | number | undefined = form.id ?? form.formId
+      if (!id) throw Error("Form requires id or formId.")
+      else {
+        let f = useForm(form)
+        this.data[id] = f
+        return this.data[id] as typeof f
+      }
     }
   }
 })
