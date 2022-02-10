@@ -6,10 +6,12 @@
     <div class="mdc-touch-target-wrapper" ref="mainRef">
       <button
           class="mdc-button mdc-button--touch"
+          :disabled="disabled"
           :class="{
             'mdc-button--raised': raised,
             'secondary': secondary
           }"
+          @click="!disabled ? $emit('click', $event) : null"
       >
         <span class="mdc-button__ripple"></span>
         <span class="mdc-button__touch"></span>
@@ -18,35 +20,35 @@
           <slot name="leading-icon" />
         </i>
         <span class="mdc-button__label"><slot /></span>
+        <i class="material-icons mdc-button__icon" aria-hidden="true" v-if="$slots['trailing-icon']">
+          <slot name="trailing-icon" />
+        </i>
       </button>
     </div>
   </div>
 </template>
 
-<script lang="ts">
-import { defineComponent, onMounted, ref } from 'vue'
+<script setup lang="ts">
+import { onMounted, ref } from 'vue'
 import { MDCRipple } from '@material/ripple'
 
-
-export default defineComponent({
-  props: {
-    raised: Boolean,
-    secondary: Boolean,
-  },
-  setup() {
-    const mainRef = ref<HTMLElement | null>(null)
-    onMounted(() => {
-      let mdcButton: HTMLElement | null | undefined = mainRef.value?.querySelector('.mdc-button')
-      if (mdcButton) {
-        const buttonRipple = new MDCRipple(mdcButton)
-      }
-    })
-    
-    return {
-      mainRef,
-    }
-  },
+defineProps({
+  raised: Boolean,
+  secondary: Boolean,
+  disabled: Boolean,
 })
+
+defineEmits([
+  'click'
+])
+
+const mainRef = ref<HTMLElement | null>(null)
+onMounted(() => {
+  let mdcButton: HTMLElement | null | undefined = mainRef.value?.querySelector('.mdc-button')
+  if (mdcButton) {
+    const buttonRipple = new MDCRipple(mdcButton)
+  }
+})    
 </script>
 
 <style lang="scss" scoped>
