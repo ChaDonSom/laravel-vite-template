@@ -50,6 +50,7 @@ const mainRef = ref<Element | null>(null)
 const mdcTextfield = ref<MDCTextField | null>(null)
 onMounted(() => {
   if (mainRef.value) mdcTextfield.value = new MDCTextField(mainRef.value)
+  if (props.autofocus) mainRef.value?.querySelector('input')?.focus()
 })
 </script>
 
