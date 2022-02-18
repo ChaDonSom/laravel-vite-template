@@ -34,7 +34,7 @@ const forms = useForms()
 
 onMounted(auth.getSanctumCookie)
 
-const form = forms.newForm({
+const form = forms.make({
   id: 'registration-form',
   name: '',
   email: '',

@@ -3,15 +3,21 @@ import { isEqual, cloneDeep } from 'lodash'
 import { reactive, watch } from 'vue'
 import { RemovableRef, useStorage } from "@vueuse/core";
 import axios, { AxiosResponse, AxiosStatic } from 'axios'
+import { DateTime } from "luxon";
+type FormData = {
+  data: {},
+  errors: {},
+  at: string,
+}
 
 export function useForm(...args: any[]) {
   const rememberKey = typeof args[0] === 'string' ? args[0] : args[0]?.formId ?? args[0]?.id ?? null
-  type FormData = {
-    data: {},
-    errors: {},
-  }
+  const formTimeLimit = (typeof args[0] === 'string' ? 5 : args[0]?.formTimeLimit) ?? 5 // 5 minute default
+
   const data: FormData = (typeof args[0] === 'string' ? args[1] : args[0]) || {}
   const restored: RemovableRef<FormData> | null = rememberKey ? useStorage(rememberKey, data) : null
+  let storedAt = restored?.value?.at ? DateTime.fromSeconds(Number(restored?.value?.at)) : DateTime.now().minus({ day: 1 })
+  if (restored && DateTime.now().diff(storedAt, 'minutes').minutes > formTimeLimit) restored.value = null
   let defaults = cloneDeep(data)
   let cancelToken: any | null = null
   let recentlySuccessfulTimeoutId: number | undefined = undefined
@@ -31,9 +37,9 @@ export function useForm(...args: any[]) {
     wasSuccessful: false,
     recentlySuccessful: false,
     data() {
-      return Object
-        .keys(data)
+      return Object.keys(data)
         .reduce((carry: { [key: string]: any}, key) => {
+          // @ts-ignore
           carry[key] = this[key]
           return carry
         }, {})
@@ -45,6 +51,7 @@ export function useForm(...args: any[]) {
     },
     defaults(key?: string, value?: any) {
       if (typeof key === 'undefined') {
+        // @ts-ignore
         defaults = this.data()
       } else {
         defaults = Object.assign(
@@ -67,6 +74,7 @@ export function useForm(...args: any[]) {
             .keys(clonedDefaults)
             .filter(key => fields.includes(key))
             .reduce((carry: { [key: string]: any }, key) => {
+              // @ts-ignore
               carry[key] = clonedDefaults[key]
               return carry
             }, {}),
@@ -75,8 +83,9 @@ export function useForm(...args: any[]) {
 
       return this
     },
-    setError(key: string, value: any) {
-      Object.assign(this.errors, (value ? { [key]: value } : key))
+    setError(key: string | {}, value?: any) {
+      if (!value && typeof key == 'object') Object.assign(this.errors, key)
+      else if (typeof key == 'string') Object.assign(this.errors, { [key]: value })
 
       this.hasErrors = Object.keys(this.errors).length > 0
 
@@ -87,6 +96,7 @@ export function useForm(...args: any[]) {
         .keys(this.errors)
         .reduce((carry, field) => ({
           ...carry,
+          // @ts-ignore
           ...(fields.length > 0 && !fields.includes(field) ? { [field] : this.errors[field] } : {}),
         }), {})
 
@@ -131,6 +141,7 @@ export function useForm(...args: any[]) {
         this.recentlySuccessful = true
         recentlySuccessfulTimeoutId = setTimeout(() => this.recentlySuccessful = false, 2000)
         cancelToken = null
+        // @ts-ignore
         defaults = cloneDeep(this.data())
         this.isDirty = false
         return response?.data
@@ -168,9 +179,8 @@ export function useForm(...args: any[]) {
         cancelToken.cancel()
       }
     },
-    __rememberable: rememberKey === null,
     __remember() {
-      return { data: this.data(), errors: this.errors }
+      return { data: this.data(), errors: this.errors, at: String(DateTime.now().toSeconds()) }
     },
     __restore(restored: { data: {}, errors: {} }) {
       Object.assign(this, restored.data)
@@ -191,6 +201,10 @@ export function useForm(...args: any[]) {
 
 export type Form<T> = ReturnType<typeof useForm> & {
   [Property in keyof T]: T[Property]
+} & {
+  errors: {
+    [Property in keyof T]: string
+  }
 }
 
 export const useForms = defineStore('forms', {
@@ -198,19 +212,15 @@ export const useForms = defineStore('forms', {
     data: {} as { [key: string | number]: any }
   }),
   getters: {
-    getById: (state) => (id: string | number) => {
-      return state.data[id]
-    }
+    keys: (state) => Object.keys(state.data),
+    values: (state) => Object.values(state.data),
   },
   actions: {
-    newForm(form: { id?: string | number, formId?: string, [key: string]: any }) {
-      let id: string | number | undefined = form.id ?? form.formId
-      if (!id) throw Error("Form requires id or formId.")
-      else {
-        let f = useForm(form)
-        this.data[id] = f
-        return this.data[id] as typeof f
-      }
-    }
+    make(form: { id?: string | number, formId?: string, [key: string]: any }) {
+      let id: string | number | undefined = form.formId ?? `form-${this.keys.length}`
+      let f = useForm(form)
+      this.data[id] = f
+      return this.data[id] as typeof f & Form<typeof form>
+    },
   }
 })

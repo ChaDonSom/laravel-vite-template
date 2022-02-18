@@ -48,6 +48,15 @@
 			<component :is="Component" />
 		</transition>
 	</RouterView>
+	<transition-group name="modal">
+		<Component
+			v-for="modal of modals.values"
+			:key="modal.id"
+			:is="modal.modal"
+			v-bind="modal.props"
+			:id="modal.id"
+		/>
+	</transition-group>
 </template>
 
 <script setup lang="ts">
@@ -55,6 +64,7 @@ import { useAuth } from '@/ts/core/users/auth';
 import Button from '@/ts/core/buttons/Button.vue';
 import { onMounted, ref, watch } from 'vue';
 import { useOnline, useScroll, useWindowScroll } from '@vueuse/core';
+import { useModals } from '@/ts/store/modals';
 
 const auth = useAuth()
 
@@ -78,6 +88,8 @@ onMounted(() => {
 		auth.getUser()
 	}
 })
+
+const modals = useModals()
 </script>
 
 <style scoped lang="scss">

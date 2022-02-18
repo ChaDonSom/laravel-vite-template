@@ -1,86 +1,54 @@
 <template>
-  <transition name="modal">
-    <div class="modal-mask" @click.self="$emit('close')" ref="elRef" v-if="open">
-      <div class="modal-wrapper" @click.self="$emit('close')">
-        <div class="modal-container" ref="containerRef">
-          <div class="sticky top-0 bg-white z-10 top-shadow"
-              :class="{
-                'scrolled-down': scrollable && scrolledDown,
-                'border-b-2': scrollable && ($slots.title || scrolledDown),
-                'border-gray-300': scrollable && !scrolledDown,
-                'border-gray-500': scrollable && scrolledDown,
-                'pb-1': $slots.title 
-              }"
-          >
-            <slot name="title" />
-          </div>
-          <slot />
-          <div class="sticky bottom--1 bg-white bottom-shadow"
-              :class="{
-                'scrolled-up': scrollable && scrolledUp,
-                'border-t-2': scrollable && ($slots.actions || scrolledUp),
-                'border-gray-300': scrollable && !scrolledUp,
-                'border-gray-500': scrollable && scrolledUp,
-                'h-2': !$slots.actions 
-              }"
-          >
-            <slot name="actions" />
-          </div>
+  <div class="modal-mask" @click.self="$emit('close')" ref="elRef">
+    <div class="modal-wrapper" @click.self="$emit('close')">
+      <div class="modal-container" ref="containerRef">
+        <div class="sticky top-0 bg-white z-10 top-shadow"
+            :class="{
+              'pb-1': $slots.title,
+              'border-b-2 border-gray-300': scrollable,
+              'scrolled-down border-gray-500': scrollable && !scroll.arrivedState.top,
+            }"
+        >
+          <slot name="title" />
+        </div>
+        <slot />
+        <div class="sticky bottom-0 bg-white bottom-shadow"
+            :class="{
+              'h-2': !$slots.actions,
+              'border-t-2 border-gray-300': scrollable,
+              'scrolled-up border-gray-500': scrollable && !scroll.arrivedState.bottom,
+            }"
+        >
+          <slot name="actions" />
         </div>
       </div>
     </div>
-  </transition>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue'
-import { useElementSize, useWindowSize } from '@vueuse/core'
-import _ from 'lodash'
-
-defineProps({
-  open: Boolean,
-})
+import { useElementSize, useScroll, useWindowSize } from '@vueuse/core'
+import { ref, watch } from 'vue'
 
 const elRef = ref(null)
 const containerRef = ref<HTMLElement | null>(null)
 const scrollable = ref(false)
-const scrolledDown = ref(false)
-const scrolledUp = ref(false)
-
-onMounted(() => {
-  let setScrollVariables = () => {
-    setTimeout(() => {
-      if ((containerRef.value?.scrollTop ?? 0) > 4) scrolledDown.value = true
-      else scrolledDown.value = false
-      let scrollBottom = Math.round((containerRef.value?.scrollTop ?? 0) + (containerRef.value?.clientHeight ?? 0))
-      if (((containerRef.value?.scrollHeight ?? 0) - scrollBottom) > 4) scrolledUp.value = true
-      else scrolledUp.value = false
-    })
+const scroll = useScroll(containerRef, {
+  offset: {
+    bottom: 4 // Allows the bottom sticky that comes up slightly to still register as the bottom of the modal
   }
-  let setScrollVariablesDebounced = _.debounce(setScrollVariables, 200, { trailing: true })
-  const { width, height } = useWindowSize()
-  const { width: eWidth, height: eHeight } = useElementSize(containerRef.value)
-  watch(
-    () => width.value + height.value + eWidth.value + eHeight.value,
-    () => {
-      setTimeout(() => {
-        scrollable.value = (containerRef.value?.scrollHeight ?? 0) > (containerRef.value?.clientHeight ?? 0)
-        setScrollVariablesDebounced()
-      })
-    },
-    { immediate: true }
-  )
-  // Register scroll handlers on container
-  containerRef.value?.addEventListener('scroll', setScrollVariables)
-  setScrollVariablesDebounced()
 })
+const { width, height } = useWindowSize()
+const { width: eWidth, height: eHeight } = useElementSize(containerRef)
+watch(
+  () => width.value + height.value + eWidth.value + eHeight.value,
+  () => {
+    scrollable.value = (containerRef.value?.scrollHeight ?? 0) > (containerRef.value?.clientHeight ?? 0)
+  }
+)
 </script>
 
 <style scoped lang="scss">
-.bottom--1 {
-  bottom: -1px;
-}
-
 .border-t-2 {
   border-top-style: solid;
 }
@@ -154,7 +122,7 @@ onMounted(() => {
     height: 2px;
     width: 100%;
     // left: 1%;
-    box-shadow: 0 0 6px rgb(0 0 0 / 0.8);
+    box-shadow: 0 0 4px rgb(0 0 0 / 0.8);
     z-index: 0;
   }
   &.scrolled-up::after, &.scrolled-down::after {

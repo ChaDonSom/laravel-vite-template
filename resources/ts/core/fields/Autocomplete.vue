@@ -10,6 +10,7 @@
       </span>
       <i v-if="$slots['leading-icon']" class="material-icons mdc-text-field__icon mdc-text-field__icon--leading"
         tabindex="0" role="button"
+        @click="$emit('clickLeadingIcon', $event)"
       >
         <slot name="leading-icon"></slot>
       </i>
@@ -26,6 +27,7 @@
       >
       <i v-if="$slots['trailing-icon']" class="material-icons mdc-text-field__icon mdc-text-field__icon--trailing"
         tabindex="0" role="button"
+        @click="$emit('clickTrailingIcon', $event)"
       >
         <slot name="trailing-icon"></slot>
       </i>
@@ -60,7 +62,7 @@ const props = defineProps({
   autofocus: Boolean,
 })
 
-const emit = defineEmits(['update:modelValue', 'update:textValue'])
+const emit = defineEmits(['update:modelValue', 'update:textValue', 'clickLeadingIcon', 'clickTrailingIcon'])
 
 const id = ref(Math.floor(Math.random() * 10000000))
 const mainRef = ref<Element | null>(null)

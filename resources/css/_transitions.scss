@@ -31,10 +31,26 @@
 	transition: opacity 200ms ease-out, transform 200ms ease;
 }
 
+.modal-enter-from, .modal-leave-to {
+  opacity: 0;
+}
+
+.modal-enter-from .modal-container,
+.modal-leave-to .modal-container {
+  -webkit-transform: scale(0.95);
+  transform: scale(0.95);
+}
+
 .opacity-0-scale-097-150ms-enter-from, .opacity-0-scale-097-150ms-leave-to {
 	opacity: 0;
 	transform: scale(0.97);
 }
 .opacity-0-scale-097-150ms-enter-active, .opacity-0-scale-097-150ms-leave-active {
 	transition: opacity 150ms ease-out, transform 150ms ease-out;
+}
+.opacity-0-scale-097-150ms-move {
+	transition: transform 150ms ease-out;
+}
+.opacity-0-scale-097-150ms-leave-active {
+	position: absolute;
 }

@@ -21,6 +21,7 @@
           :autofocus="autofocus"
           @focus="autoselect ? ($event.target as HTMLInputElement).select() : null"
           @input="$emit('update:modelValue', ($event?.target as HTMLInputElement)?.value)"
+          @change="change"
       >
     </label>
     <div class="mdc-text-field-helper-line max-w-fit">
@@ -48,6 +49,8 @@ const props = defineProps({
   autofocus: Boolean,
 })
 
+const emit = defineEmits(['update:modelValue'])
+
 const id = ref(Math.floor(Math.random() * 10000000))
 const mainRef = ref<Element | null>(null)
 const mdcTextfield = ref<MDCTextField | null>(null)
@@ -55,6 +58,21 @@ onMounted(() => {
   if (mainRef.value) mdcTextfield.value = new MDCTextField(mainRef.value)
   if (props.autofocus) mainRef.value?.querySelector('input')?.focus()
 })
+
+function change(event: Event) {
+  let value = (event.target as HTMLInputElement)?.value
+  let split = value?.split('.')
+  let afterDecimal = split[1]
+  if (!afterDecimal || afterDecimal.length != 2) {
+    let beforeDecimal = split[0] ?? "0"
+    let replacementDecimal = afterDecimal ?? "00"
+    if (afterDecimal?.length) {
+      if (afterDecimal.length == 1) replacementDecimal = `${afterDecimal}0`
+      else replacementDecimal = String(Math.round(Number(afterDecimal.slice(0, 2) + '.' + afterDecimal.slice(2))))
+    }
+    emit('update:modelValue', `${beforeDecimal}.${replacementDecimal}`)
+  }
+}
 </script>
 
 <style scoped lang="scss">
