@@ -37,6 +37,15 @@
 			<div class="my-7" v-if="auth.authenticated">
 				<Button @click="sendPushNotification">Send myself a push notification</Button>
 			</div>
+			<div class="my-7 flex flex-col items-center justify-center gap-2" v-if="forgeResponse">
+				<h3>My sites:</h3>
+				<p v-for="site of forgeResponse" :key="site.id">
+					<a :href="`https://${site.name}`" class="flex flex-col items-center text-blue-600 visited:text-purple-600">
+						<img :src="`https://${site.name}/favicon.ico`" class="h-14 w-14">	
+						<span>{{ site.name }}</span>
+					</a>
+				</p>
+			</div>
 		</div>
 	</div>
 </template>
@@ -49,6 +58,7 @@ import { vite_asset } from '@/ts/core/utilities/build'
 import workboxImage from '@/static/images/workbox-1.svg'
 import logrocketImage from '@/static/images/logrocket-1.png'
 import pusherImage from '@/static/images/pusher-1.png'
+import vueImage from '@/static/images/vue_logo.png'
 import { useAuth } from '../core/users/auth';
 import { useEcho } from '../store/echo';
 import axios from 'axios';
@@ -83,12 +93,12 @@ const stack = ref([
 	{
 		title: 'Vue Router',
 		link: 'https://next.router.vuejs.org/',
-		image: 'https://v3.vuejs.org/logo.png'
+		image: vueImage
 	},
 	{
 		title: 'Vue 3',
 		link: 'https://v3.vuejs.org/',
-		image: 'https://v3.vuejs.org/logo.png'
+		image: vueImage
 	},
 	{
 		title: 'Vite',
@@ -154,6 +164,14 @@ function sendPushNotification() {
 		message: 'Hi there, a notification from Laravel Vite Template!'
 	})
 }
+
+const forgeResponse = ref<Array<{ id: string, status: string, name: string, }>|null>(null)
+onMounted(async () => {
+	let response = await axios.get('/api/sites')
+	forgeResponse.value = response.data.sites.filter((site: any) => {
+		return site.status == 'installed' && site.name != 'default'
+	})
+})
 </script>
 
 <style scoped lang="scss">

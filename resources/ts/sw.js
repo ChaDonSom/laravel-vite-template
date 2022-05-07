@@ -50,7 +50,6 @@ registerRoute(
 let iconUrls = [
     "https://laravel.com/img/logomark.min.svg",
     "https://laravel-vite.innocenzi.dev/logo.svg",
-    "https://v3.vuejs.org/logo.png",
     "https://vitejs.dev/logo.svg",
     "https://pinia.vuejs.org/logo.svg",
     "https://upload.wikimedia.org/wikipedia/commons/4/4c/Typescript_logo_2020.svg",

@@ -45,3 +45,17 @@ Route::prefix('beams')->middleware('auth:sanctum')->group(function () {
         return Response::json($beamsToken);
     });
 });
+
+Route::get('/sites', function (Request $request) {
+    $client = new GuzzleHttp\Client();
+    $VITE_FORGE_SERVER_ID = env("VITE_FORGE_SERVER_ID");
+    $VITE_FORGE_API_KEY = env("VITE_FORGE_API_KEY");
+    $res = $client->request('GET', "https://forge.laravel.com/api/v1/servers/{$VITE_FORGE_SERVER_ID}/sites", [
+        "headers" => [
+			"Authorization" => "Bearer {$VITE_FORGE_API_KEY}",
+			"Accept" => "application/json",
+			"Content-Type" => "application/json",
+        ]
+    ]);
+    return $res->getBody();
+});
