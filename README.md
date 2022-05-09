@@ -18,14 +18,14 @@
 
 &nbsp;
 
-<a href="https://v3.vuejs.org/" target="_blank" title="Vue 3">
-    <img src="https://v3.vuejs.org/logo.png" height="55">
+<a href="https://vuejs.org/" target="_blank" title="Vue 3">
+    <img src="https://vuejs.org/images/logo.png" height="55">
 </a> Vue 3 is powerful, fast, and lends itself to clean organization through its Composition API.
 
 &nbsp;
 
 <a href="https://next.router.vuejs.org/" target="_blank" title="Vue Router">
-    <img src="https://v3.vuejs.org/logo.png" height="55">
+    <img src="https://vuejs.org/images/logo.png" height="55">
 </a> Vue Router allows us to handle SPA navigation on our frontend.
 
 &nbsp;
