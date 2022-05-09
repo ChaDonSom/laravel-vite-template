@@ -96,3 +96,5 @@ php artisan queue:listen & # if you'd like to run Laravel queue jobs
 
 npm run dev & # the Vite server
 ```
+
+**Note: use `:8000`, for Laravel's server, rather than `:3000`, for Vite's server.** The `laravel-vite` package sets things up to run vite's features from port `8000`.
