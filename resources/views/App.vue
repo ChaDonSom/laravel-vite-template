@@ -45,7 +45,7 @@
 	</div>
 	<RouterView #default="{ Component }">
 		<transition name="page-navigation" mode="out-in">
-			<component :is="Component" />
+			<component :is="Component" v-if="hasInitiallyLoaded" v-cloak />
 		</transition>
 	</RouterView>
 	<transition-group name="modal">
@@ -83,10 +83,13 @@ watch(y, () => {
 	}
 })
 
-onMounted(() => {
+const hasInitiallyLoaded = ref(false)
+onMounted(async () => {
 	if (!auth.authenticated || !auth.user) {
-		auth.getUser()
+		await auth.getUser()
 	}
+
+	hasInitiallyLoaded.value = true
 })
 
 const modals = useModals()
