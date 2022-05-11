@@ -12,37 +12,66 @@
         </tbody>
       </table>
     </div>
+
+    <div class="mdc-data-table__progress-indicator">
+      <div class="mdc-data-table__scrim"></div>
+      <div class="mdc-linear-progress mdc-linear-progress--indeterminate mdc-data-table__linear-progress" role="progressbar" aria-label="Data is being loaded...">
+        <div class="mdc-linear-progress__buffer">
+          <div class="mdc-linear-progress__buffer-bar"></div>
+          <div class="mdc-linear-progress__buffer-dots"></div>
+        </div>
+        <div class="mdc-linear-progress__bar mdc-linear-progress__primary-bar">
+          <span class="mdc-linear-progress__bar-inner"></span>
+        </div>
+        <div class="mdc-linear-progress__bar mdc-linear-progress__secondary-bar">
+          <span class="mdc-linear-progress__bar-inner"></span>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import {MDCDataTable} from '@material/data-table';
+import { MDCDataTable } from '@material/data-table';
+import { useLocalStorage } from '@vueuse/core';
 import { onMounted, ref } from 'vue';
+
+const emit = defineEmits(['sort'])
 
 const rootRef = ref(null)
 const dataTable = ref<MDCDataTable|null>(null)
 
 onMounted(() => {
-  if (rootRef.value) dataTable.value = new MDCDataTable(rootRef.value);
+  setTimeout(() => {
+    if (rootRef.value) {
+      dataTable.value = new MDCDataTable(rootRef.value)
+
+      dataTable.value.listen('MDCDataTable:sorted', event => {
+        emit('sort', { ...event.detail, hideProgress: dataTable.value?.hideProgress?.bind(dataTable.value) })
+        dataTable.value?.showProgress()
+      })
+    }
+  })
 })
 </script>
 
 <style scoped lang="scss">
 @use "@/css/mdc-theme";
 @use "@material/checkbox"; // Required only for data table with row selection.
-@use "@material/icon-button/styles"; // Required only for data table with column sorting.
+@use "@material/icon-button/icon-button"; // Required only for data table with column sorting.
 @use "@material/data-table/data-table-theme" with (
   $shape-radius: mdc-theme.$table-shape-radius,
 );
 @use "@material/data-table/data-table";
 
-// Apply both scoped and deep styles, to get to slotted elements
 @include checkbox.core-styles;
+@include icon-button.core-styles;
 @include data-table.core-styles;
 @include data-table.theme-baseline;
 
 :deep() {
   @include checkbox.core-styles;
+  @include icon-button.core-styles;
   @include data-table.core-styles;
   @include data-table.theme-baseline;
 
@@ -67,5 +96,4 @@ onMounted(() => {
     }
   }
 }
-
 </style>
