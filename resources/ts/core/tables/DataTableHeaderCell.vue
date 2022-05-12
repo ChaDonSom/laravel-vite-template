@@ -96,17 +96,16 @@ const thBindableAttributes = computed(() => {
   We have to help out the DataTable component here by applying its styles. For some reason,
   DataTable's styles will only apply when not scoped (not even using :deep)
  */
+@use "./index" as tables;
 
-@use "@/css/mdc-theme";
-@use "@material/checkbox"; // Required only for data table with row selection.
-@use "@material/icon-button/icon-button"; // Required only for data table with column sorting.
-@use "@material/data-table/data-table-theme" with (
-  $shape-radius: mdc-theme.$table-shape-radius,
-);
-@use "@material/data-table/data-table";
-
-@include checkbox.core-styles;
-@include icon-button.core-styles;
-@include data-table.core-styles;
-@include data-table.theme-baseline;
+.mdc-data-table__header-cell::after {
+  content: '';
+  display: block;
+  position: absolute;
+  width: calc(100% + 32px);
+  height: 2px;
+  bottom: 0;
+  left: -16px;
+  background-color: rgb(197, 197, 197);
+}
 </style>

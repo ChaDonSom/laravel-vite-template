@@ -1,5 +1,5 @@
 <template>
-  <div class="mdc-data-table" ref="rootRef">
+  <div class="mdc-data-table mdc-data-table--sticky-header" ref="rootRef">
     <div class="mdc-data-table__table-container">
       <table class="mdc-data-table__table">
         <thead v-if="$slots.header">
@@ -57,23 +57,14 @@ onMounted(() => {
 
 <style scoped lang="scss">
 @use "@/css/mdc-theme";
-@use "@material/checkbox"; // Required only for data table with row selection.
-@use "@material/icon-button/icon-button"; // Required only for data table with column sorting.
-@use "@material/data-table/data-table-theme" with (
-  $shape-radius: mdc-theme.$table-shape-radius,
-);
-@use "@material/data-table/data-table";
-
-@include checkbox.core-styles;
-@include icon-button.core-styles;
-@include data-table.core-styles;
-@include data-table.theme-baseline;
+@use "./index" as tables;
 
 :deep() {
-  @include checkbox.core-styles;
-  @include icon-button.core-styles;
-  @include data-table.core-styles;
-  @include data-table.theme-baseline;
+  @include tables.apply;
+
+  .mdc-data-table__table-container {
+    border-radius: mdc-theme.$table-shape-radius;
+  }
 
   // Fix rounded corners in header row
   .mdc-data-table__header-row .mdc-data-table__header-cell {
