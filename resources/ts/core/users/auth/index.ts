@@ -2,6 +2,7 @@ import axios from "axios";
 import { defineStore } from "pinia";
 import LogRocket from "logrocket";
 import { useBeams } from "@/ts/store/beams";
+import { useModals } from "@/ts/store/modals";
 
 export const useAuth = defineStore('auth', {
     state: () => ({
@@ -92,6 +93,7 @@ export const useAuth = defineStore('auth', {
         },
         async logout() {
             try {
+                await useModals().confirm('Do you really want to log out?')
                 let response = await axios.post('/logout')
                 this.unauthenticate()
                 this.router.push({ name: 'index' })
