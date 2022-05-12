@@ -1,5 +1,5 @@
 <template>
-  <div v-if="large || (!large && !medium && !small)" ref="mainRef" class="mdc-circular-progress mdc-circular-progress--indeterminate" style="width: 48px; height: 48px; overflow: hidden; margin: 4px;" role="progressbar" aria-label="Example Progress Bar" aria-valuemin="0" aria-valuemax="1">
+  <div v-if="large || (!large && !medium && !small)" ref="mainRef" class="mdc-circular-progress mdc-circular-progress--indeterminate" style="width: 48px; height: 48px; overflow: hidden; margin: 4px;" role="progressbar" aria-label="Example Progress Bar" aria-valuemin="0" aria-valuemax="1" :class="{ 'secondary': secondary }">
     <div class="mdc-circular-progress__determinate-container">
       <svg class="mdc-circular-progress__determinate-circle-graphic" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
         <circle class="mdc-circular-progress__determinate-track" cx="24" cy="24" r="18" stroke-width="4"/>
@@ -26,7 +26,7 @@
       </div>
     </div>
   </div>
-  <div v-else-if="medium" ref="mainRef" class="mdc-circular-progress mdc-circular-progress--indeterminate" style="width: 36px; height: 36px; overflow: hidden; margin: 4px;" role="progressbar" aria-label="Example Progress Bar" aria-valuemin="0" aria-valuemax="1">
+  <div v-else-if="medium" ref="mainRef" class="mdc-circular-progress mdc-circular-progress--indeterminate" style="width: 36px; height: 36px; overflow: hidden; margin: 4px;" role="progressbar" aria-label="Example Progress Bar" aria-valuemin="0" aria-valuemax="1" :class="{ 'secondary': secondary }">
     <div class="mdc-circular-progress__determinate-container">
       <svg class="mdc-circular-progress__determinate-circle-graphic" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
         <circle class="mdc-circular-progress__determinate-track" cx="16" cy="16" r="12.5" stroke-width="3"/>
@@ -53,7 +53,7 @@
       </div>
     </div>
   </div>
-  <div v-else-if="small" ref="mainRef" class="mdc-circular-progress mdc-circular-progress--indeterminate" style="width: 24px; height: 24px; overflow: hidden; margin: 4px;" role="progressbar" aria-label="Example Progress Bar" aria-valuemin="0" aria-valuemax="1">
+  <div v-else-if="small" ref="mainRef" class="mdc-circular-progress mdc-circular-progress--indeterminate" style="width: 24px; height: 24px; overflow: hidden; margin: 4px;" role="progressbar" aria-label="Example Progress Bar" aria-valuemin="0" aria-valuemax="1" :class="{ 'secondary': secondary }">
     <div class="mdc-circular-progress__determinate-container">
       <svg class="mdc-circular-progress__determinate-circle-graphic" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
         <circle class="mdc-circular-progress__determinate-track" cx="12" cy="12" r="8.75" stroke-width="2.5"/>
@@ -90,6 +90,7 @@ defineProps({
   large: Boolean,
   medium: Boolean,
   small: Boolean,
+  secondary: Boolean,
 })
 
 const mainRef = ref(null)
@@ -105,6 +106,9 @@ onMounted(() => {
 
 @include circular-progress.core-styles;
 .mdc-circular-progress {
-  @include circular-progress.indeterminate-colors((mdc-theme.$primary, mdc-theme.$secondary, mdc-theme.$primary, mdc-theme.$secondary));
+  @include circular-progress.color(mdc-theme.$primary);
+  &.secondary {
+    @include circular-progress.color(mdc-theme.$secondary);
+  }
 }
 </style>
