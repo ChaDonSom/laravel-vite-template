@@ -14,8 +14,11 @@ import App from '@/views/App.vue'
 import { router } from '@/ts/router'
 import { store } from '@/ts/store'
 import '@/css/app.css'
+import "floating-vue/dist/style.css";
+import '@/css/popper.scss'
 // @ts-ignore
 import { registerSW } from 'virtual:pwa-register'
+import FloatingVue from 'floating-vue'
 import LogRocket from 'logrocket'
 const logrocketProject = import.meta.env.VITE_LOGROCKET_PROJECT
 if (logrocketProject && typeof logrocketProject == 'string') {
@@ -55,4 +58,5 @@ const updateSW = registerSW({
 const app = createApp(App)
     .use(store)
     .use(router)
+    .use(FloatingVue)
     .mount('#app')
