@@ -11,7 +11,10 @@ export function useForm<T>(url: string, form: T) {
     const isDirty = ref(false)
     function reset<T>(resetValues: T) {
         Object.assign(internalForm, resetValues)
-        setTimeout(() => isDirty.value = false)
+        setTimeout(() => {
+            isDirty.value = false
+            httpStatus.value = null
+        })
     }
     const errors = ref(
         Object.keys(form).reduce((a, c) => {
@@ -31,6 +34,7 @@ export function useForm<T>(url: string, form: T) {
     const processingNotDelete = computed(() => processing.value && !processingDelete.value)
     const recentlySuccessful = ref(false)
     let recentlySuccessfulTimeoutId: number | undefined = undefined
+    const httpStatus = ref<number|null>(null)
 
     async function submit(method: string, internalUrl?: string) {
         processing.value = true
@@ -57,6 +61,7 @@ export function useForm<T>(url: string, form: T) {
             recentlySuccessful.value = true
             recentlySuccessfulTimeoutId = setTimeout(() => recentlySuccessful.value = false, 2000)
             isDirty.value = false
+            httpStatus.value = response?.status ?? null
             return response?.data
         }
         function onError(e: any) {
@@ -64,6 +69,7 @@ export function useForm<T>(url: string, form: T) {
             processingDelete.value = false;
             let data = e.response?.data
             let status = e.response?.status
+            httpStatus.value = status
             let errs: { [key: string]: any } = {}
             if (status == 422) {
                 if (data?.message == 'The given data was invalid.') errs.message = `Whoops! Looks like you may have typed something wrong. Care to retry?`
@@ -110,6 +116,7 @@ export function useForm<T>(url: string, form: T) {
     return reactive({
         ...toRefs(internalForm),
         isDirty,
+        httpStatus,
         reset,
         errors,
         clearErrors,
