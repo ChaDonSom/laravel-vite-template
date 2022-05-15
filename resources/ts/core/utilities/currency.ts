@@ -1,14 +1,16 @@
 export const dollars = (value: number): string => {
-  let split = `$${rounded(value)}`.split('')
+  let n = Number(rounded(value))
+  let split = `${rounded(Math.abs(value))}`.split('')
   let result = []
   let decimalIndex = split.indexOf('.') - 1
-  for (let i =  0; i < split.length; i++) {
+  for (let i = 0; i < split.length; i++) {
     result.push(split[i])
     if (i < decimalIndex) {
       if ((decimalIndex - i) % 3 == 0 && i != 0) result.push(',')
     }
   }
-  return result.join('')
+  let mod = n >= 0 ? '' : '- '
+  return `${mod}$${result.join('')}`
 }
 
 export const rounded = (value: number, decimals?: number): string => {
