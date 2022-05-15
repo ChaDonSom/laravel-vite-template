@@ -83,6 +83,8 @@
 # Get started
 
 ```bash
+cp .env.example .env
+
 composer install
 npm install
 npm start
