@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="mdc-touch-target-wrapper" ref="mainRef">
-      <button class="mdc-fab mdc-fab--mini mdc-fab--touch" :class="{ 'secondary': secondary }">
+      <button class="mdc-fab mdc-fab--touch" :class="{ 'secondary': secondary, 'mdc-fab--mini': small }">
         <div class="mdc-fab__ripple"></div>
         <span class="material-icons mdc-fab__icon">{{ icon }}</span>
         <div class="mdc-fab__touch"></div>
@@ -17,6 +17,7 @@ import { onMounted, ref } from 'vue';
 defineProps({
   secondary: Boolean,
   icon: String,
+  small: Boolean,
 })
 
 const mainRef = ref<HTMLElement | null>(null)
