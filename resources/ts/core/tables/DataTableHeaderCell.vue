@@ -69,7 +69,6 @@ function thClick() {
   setTimeout(() => thUpdateKey.value++)
 }
 const thClasses = computed(() => {
-  console.log('thClasses')
   let x = thUpdateKey.value
   return {
     'mdc-data-table__header-cell--numeric': props.numeric,
