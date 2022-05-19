@@ -23,16 +23,15 @@ import axios, { AxiosError, AxiosResponse } from 'axios'
 import Button from '../../buttons/Button.vue';
 import Textfield from '../../fields/OutlinedTextfield.vue';
 import { useRouter } from 'vue-router';
-import { useForms } from '@/ts/store/forms';
 import { useAuth } from '.';
+import { useForm } from '@/ts/store/forms';
 
 const router = useRouter()
 const auth = useAuth()
 
 onMounted(auth.getSanctumCookie)
 
-const forms = useForms()
-const form = forms.make({
+const form = useForm('/login', {
   id: 'login-form',
   email: '',
   password: '',

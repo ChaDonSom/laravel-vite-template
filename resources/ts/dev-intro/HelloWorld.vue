@@ -1,4 +1,10 @@
 <template>
+	<!--
+		This element allows animations to work correctly. Always give a plain root element for Page components.
+		If there are conditions on the root element, or it is a nonstandard element, the page navigation
+		animation can end up transitioning _out_ and not back _in_. This only happens when
+		transitions are in place, for some reason 🤷
+	-->
 	<div>
 		<div class="text-center m-3">
 			<div class="flex justify-center">

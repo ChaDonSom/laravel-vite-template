@@ -2,6 +2,7 @@ import axios from "axios";
 import { defineStore } from "pinia";
 import LogRocket from "logrocket";
 import { useBeams } from "@/ts/store/beams";
+import { useModals } from "@/ts/store/modals";
 
 export const useAuth = defineStore('auth', {
     state: () => ({
@@ -58,7 +59,7 @@ export const useAuth = defineStore('auth', {
         },
         async register(form: { post: Function }) {
             try {
-                let data = await form.post('/register')
+                let data = await form.post()
                 this.authenticated = true
                 this.axiosResponseInterceptor = axios.interceptors.response.use(undefined, (error: any) => {
                     if (error.response?.status == 419 || error.response?.status == 401) {
@@ -75,7 +76,7 @@ export const useAuth = defineStore('auth', {
         },
         async login(form: { post: Function }) {
             try {
-                let data = await form.post('/login')
+                let data = await form.post()
                 this.authenticated = true
                 this.axiosResponseInterceptor = axios.interceptors.response.use(undefined, (error: any) => {
                     if (error.response?.status == 419 || error.response?.status == 401) {
@@ -92,6 +93,7 @@ export const useAuth = defineStore('auth', {
         },
         async logout() {
             try {
+                await useModals().confirm('Do you really want to log out?')
                 let response = await axios.post('/logout')
                 this.unauthenticate()
                 this.router.push({ name: 'index' })

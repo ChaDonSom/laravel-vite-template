@@ -1,6 +1,13 @@
 <template>
   <div class="m-2 mt-4">
-    <label class="mdc-text-field mdc-text-field--outlined" ref="mainRef">
+    <label
+        ref="mainRef"
+        class="mdc-text-field mdc-text-field--outlined"
+        :class="{
+          [`density-${density}`]: density,
+          'mdc-text-field--with-leading-icon': icon,
+        }"
+    >
       <span class="mdc-notched-outline">
         <span class="mdc-notched-outline__leading"></span>
         <span class="mdc-notched-outline__notch">
@@ -8,6 +15,11 @@
         </span>
         <span class="mdc-notched-outline__trailing"></span>
       </span>
+      <TextfieldIcon
+          v-if="icon"
+          @click="$emit('icon-click', $event)"
+          leading
+      >{{ icon }}</TextfieldIcon>
       <span class="mdc-text-field__affix mdc-text-field__affix--prefix">$</span>
       <input
           :id="`textfield-input-${id}`"
@@ -22,6 +34,8 @@
           @focus="autoselect ? ($event.target as HTMLInputElement).select() : null"
           @input="$emit('update:modelValue', ($event?.target as HTMLInputElement)?.value)"
           @change="change"
+          @keydown.enter="$emit('keydown-enter', $event)"
+          @blur="$emit('blur', $event)"
       >
     </label>
     <div class="mdc-text-field-helper-line max-w-fit">
@@ -40,6 +54,7 @@
 <script setup lang="ts">
 import { MDCTextField } from '@material/textfield'
 import { onMounted, ref } from 'vue'
+import TextfieldIcon from '@/ts/core/fields/TextfieldIcon.vue';
 
 const props = defineProps({
   modelValue: [String, Number],
@@ -47,9 +62,16 @@ const props = defineProps({
   helper: String,
   autoselect: Boolean,
   autofocus: Boolean,
+  density: {
+    type: Number,
+    default: () => 0,
+  },
+  icon: String,
 })
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits([
+  'update:modelValue', 'blur', 'icon-click', 'change', 'keydown-enter'
+])
 
 const id = ref(Math.floor(Math.random() * 10000000))
 const mainRef = ref<Element | null>(null)
@@ -70,7 +92,10 @@ function change(event: Event) {
       if (afterDecimal.length == 1) replacementDecimal = `${afterDecimal}0`
       else replacementDecimal = String(Math.round(Number(afterDecimal.slice(0, 2) + '.' + afterDecimal.slice(2))))
     }
+    emit('change', `${beforeDecimal}.${replacementDecimal}`)
     emit('update:modelValue', `${beforeDecimal}.${replacementDecimal}`)
+  } else {
+    emit('change', Number(value).toFixed(2))
   }
 }
 </script>
@@ -82,11 +107,20 @@ function change(event: Event) {
 @use "@material/notched-outline/mdc-notched-outline";
 @use "@material/textfield";
 
-@include textfield.core-styles;
+$densities: (-4, -3, -2, -1);
 
+@include textfield.core-styles;
 .mdc-text-field {
+  @each $density in $densities {
+    &.density-#{$density} {
+      @include textfield.outlined-density($density);
+    }
+    // A fix specifically for density -4 (the other densities need it too)
+    &.mdc-text-field.density--4.mdc-text-field--with-leading-icon .mdc-notched-outline--upgraded .mdc-floating-label--float-above {
+      transform: translateX(-32px) translateY(-26.75px) scale(0.75);
+    }
+  }
   @include textfield.outline-shape-radius(mdc-theme.$textfield-shape-radius);
-  // @include textfield.outlined-density(-4);
 }
 
 // Tailwind 'undo' RE MDC mess-up, recommended by Adam Wathan (fixes tons of borders showing up on focus in MDC)

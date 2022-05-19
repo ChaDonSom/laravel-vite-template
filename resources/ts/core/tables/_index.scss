@@ -1,0 +1,22 @@
+@use "@/css/mdc-theme";
+@use "@material/checkbox"; // Required only for data table with row selection.
+@use "@material/icon-button/icon-button"; // Required only for data table with column sorting.
+@use "@material/data-table/data-table-theme" with (
+  $shape-radius: mdc-theme.$table-shape-radius,
+  // $default-density-scale: -3,
+);
+@use "@material/data-table/data-table";
+
+@include checkbox.core-styles;
+@include icon-button.core-styles;
+@include data-table.core-styles;
+@include data-table.theme-baseline;
+// @include data-table-theme.density(-4);
+
+@mixin apply() {
+  @include checkbox.core-styles;
+  @include icon-button.core-styles;
+  @include data-table.core-styles;
+  @include data-table.theme-baseline;
+  // @include data-table-theme.density(-4);
+}

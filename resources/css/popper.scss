@@ -1,0 +1,8 @@
+.v-popper--theme-dropdown {
+  transition: none;
+  .v-popper__inner {
+    transition: none;
+    border-radius: 32px;
+    border: 1px solid #b4b4b4;
+  }
+}

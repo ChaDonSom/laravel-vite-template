@@ -26,15 +26,14 @@ import Button from '../../buttons/Button.vue';
 import Textfield from '../../fields/OutlinedTextfield.vue';
 import { useRouter } from 'vue-router';
 import { useAuth } from '.';
-import { useForms } from '@/ts/store/forms';
+import { useForm } from '@/ts/store/forms';
 
 const router = useRouter()
 const auth = useAuth()
-const forms = useForms()
 
 onMounted(auth.getSanctumCookie)
 
-const form = forms.make({
+const form = useForm('/register', {
   id: 'registration-form',
   name: '',
   email: '',

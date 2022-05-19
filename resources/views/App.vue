@@ -45,12 +45,12 @@
 	</div>
 	<RouterView #default="{ Component }">
 		<transition name="page-navigation" mode="out-in">
-			<component :is="Component" />
+			<component :is="Component" v-if="hasInitiallyLoaded" v-cloak />
 		</transition>
 	</RouterView>
 	<transition-group name="modal">
 		<Component
-			v-for="modal of modals.values"
+			v-for="modal of modalsByUrlQuery"
 			:key="modal.id"
 			:is="modal.modal"
 			v-bind="modal.props"
@@ -62,9 +62,11 @@
 <script setup lang="ts">
 import { useAuth } from '@/ts/core/users/auth';
 import Button from '@/ts/core/buttons/Button.vue';
-import { onMounted, ref, watch } from 'vue';
+import { computed, onMounted, ref, watch } from 'vue';
 import { useOnline, useScroll, useWindowScroll } from '@vueuse/core';
 import { useModals } from '@/ts/store/modals';
+import IconButton from '@/ts/core/buttons/IconButton.vue';
+import { useRoute } from 'vue-router';
 
 const auth = useAuth()
 
@@ -83,13 +85,23 @@ watch(y, () => {
 	}
 })
 
-onMounted(() => {
+const hasInitiallyLoaded = ref(false)
+onMounted(async () => {
 	if (!auth.authenticated || !auth.user) {
-		auth.getUser()
+		await auth.getUser()
 	}
+
+	hasInitiallyLoaded.value = true
 })
 
 const modals = useModals()
+const route = useRoute()
+const modalsByUrlQuery = computed(() => {
+	let queryModals = (route.query.modals ?? []) as string[]|string
+	return typeof queryModals == 'string' ? 
+		(modals.data[queryModals] ? [modals.data[queryModals]] : []) : 
+		queryModals.map(i => modals.data[i]).filter(i => i)
+})
 </script>
 
 <style scoped lang="scss">

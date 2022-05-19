@@ -4,6 +4,7 @@
 /public/storage
 /public/dev-sw.js
 /public/sw.js
+/public/worker.js
 /public/manifest.json
 /public/manifest.webmanifest
 /public/workbox-*.js
