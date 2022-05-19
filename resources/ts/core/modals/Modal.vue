@@ -1,5 +1,5 @@
 <template>
-  <div class="modal-mask" @click.self="$emit('close')" ref="elRef">
+  <div class="modal-mask bg-neutral-500/50 backdrop-blur-2xs" @click.self="$emit('close')" ref="elRef">
     <div class="modal-wrapper" @click.self="$emit('close')">
       <div class="modal-container" ref="containerRef">
         <div class="sticky top-0 bg-white z-10 top-shadow"
@@ -60,7 +60,6 @@ watch(
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, .5);
   transition: opacity .3s ease;
   display: flex;
   flex-direction: column;

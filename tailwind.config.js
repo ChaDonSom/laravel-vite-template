@@ -4,7 +4,13 @@ module.exports = {
     "./resources/views/App.vue",
   ],
   theme: {
-    extend: {},
+    extend: {
+      backdropBlur: {
+        xs: '2px',
+        '2xs': '1px',
+        '3xs': '0.5px'
+      }
+    },
   },
   plugins: [],
 }
