@@ -81,7 +81,7 @@ export function useForm<T>(url: string, form: T) {
                 console.log('e: ', e)
                 console.log('data: ', data)
                 if (status == 404) {
-                    errs.message = `Route not found: ${e.response?.request?.responseURL}`
+                    errs.message = data?.message ?? `Route not found: ${e.response?.request?.responseURL}`
                 } else if (data?.message) {
                     errs.message = data?.message
                 } else if (data?.exception) {
@@ -89,7 +89,7 @@ export function useForm<T>(url: string, form: T) {
                 } else {
                     if (e.message || Object.keys(errors.value).some(i => e.hasOwnProperty(i))) {
                         Object.keys(e).forEach(key => errs[key] = e[key])
-                        if (!e.message) errs.message = Object.keys(e).map(key => `${key}: ${e[key]}`).join(';')
+                        if (!e.message) errs.message = Object.keys(e).map(key => `${key}: ${e[key]}`).join('')
                     } else {
                         errs.message = e.toString()
                     } 
