@@ -12,20 +12,20 @@
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "innocenzi/laravel-vite": "^0.1.16",
-        "laravel-notification-channels/pusher-push-notifications": "^2.3",
+        "laravel-notification-channels/pusher-push-notifications": "^3.0",
         "laravel/fortify": "^1.10",
-        "laravel/framework": "^8.75",
+        "laravel/framework": "^9.0",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "pusher/pusher-php-server": "^7.0",
         "pusher/pusher-push-notifications": "^1.1"
     },
     "require-dev": {
-        "facade/ignition": "^2.5",
+        "spatie/laravel-ignition": "^1.0",
         "fakerphp/faker": "^1.9.1",
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.4",
-        "nunomaduro/collision": "^5.10",
+        "nunomaduro/collision": "^6.1",
         "phpunit/phpunit": "^9.5.10"
     },
     "autoload": {
