@@ -4,9 +4,15 @@ import LogRocket from "logrocket";
 import { useBeams } from "@/ts/store/beams";
 import { useModals } from "@/ts/store/modals";
 
+export type User = {
+    id: number;
+    [key: string]: any;
+    account_holders?: { id: number, users: User[] }[];
+};
+
 export const useAuth = defineStore('auth', {
     state: () => ({
-        user: <{ id: number, [key: string]: any } | null> null,
+        user: <User | null> null,
         sanctumCookie: null as string | null,
         authenticated: false,
         axiosResponseInterceptor: <number | null> null,

@@ -1,5 +1,7 @@
 <?php
 
+use App\Actions\Permissions\ShareAccountHolderToUserByNameOrEmail;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,3 +26,6 @@ Route::get('/', function () {
  * "reset password" view. This is necessary because Laravel's Illuminate\Auth\Notifications\ResetPassword
  * notification will generate the password reset URL via the password.reset named route.
  */
+Route::get('/password-reset', function () {
+    return view('app');
+})->name('password.reset');
