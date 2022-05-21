@@ -1,5 +1,7 @@
 <template>
-  <div class="mdc-data-table mdc-data-table--sticky-header" ref="rootRef">
+  <div class="mdc-data-table mdc-data-table--sticky-header" ref="rootRef"
+      :class="{ 'with-paginator': $slots.paginator }"
+  >
     <div class="mdc-data-table__table-container">
       <table class="mdc-data-table__table">
         <thead v-if="$slots.header">
@@ -28,6 +30,7 @@
         </div>
       </div>
     </div>
+    <slot name="paginator"></slot>
   </div>
 </template>
 
@@ -73,18 +76,24 @@ onMounted(() => {
   }
 
   .mdc-data-table__row {
-    // Fix rounded corners in last row during hover
-    // The corners:
-    &:last-child .mdc-data-table__cell {
-      &:first-child { border-bottom-left-radius: mdc-theme.$table-shape-radius; }
-      &:last-child  { border-bottom-right-radius: mdc-theme.$table-shape-radius; }
-    }
     // The hovering:
     .mdc-data-table__cell { transition: background-color 100ms ease-in; }
     &:not(.mdc-data-table__row--selected):hover {
       background-color: unset;
       .mdc-data-table__cell { background-color: rgba(0, 0, 0, 0.04); }
     }
+  }
+}
+.mdc-data-table.with-paginator .mdc-data-table__table-container {
+  border-bottom-right-radius: 0px;
+  border-bottom-left-radius: 0px;
+}
+.mdc-data-table:not(.with-paginator):deep(.mdc-data-table__row) {
+  // Fix rounded corners in last row during hover
+  // The corners:
+  &:last-child .mdc-data-table__cell {
+    &:first-child { border-bottom-left-radius: mdc-theme.$table-shape-radius; }
+    &:last-child  { border-bottom-right-radius: mdc-theme.$table-shape-radius; }
   }
 }
 </style>
