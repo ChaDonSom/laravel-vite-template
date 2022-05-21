@@ -11,6 +11,9 @@
 				<img :src="vite_asset('android-chrome-512x512.png')" class="m-5 w-3/12">
 			</div>
 			<h1 class="text-3xl sm:text-5xl md:text-7xl font-thin">{{ msg }}</h1>
+			<h2 class="text-xl italic mt-3" v-if="$route.params.securityLoggedOut">
+				({{ $route.params.securityLoggedOut }})
+			</h2>
 
 			<h2 class="mt-5">Material Components:</h2>
 			<div class="flex justify-center gap-5">
