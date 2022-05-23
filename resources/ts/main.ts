@@ -58,5 +58,11 @@ const updateSW = registerSW({
 const app = createApp(App)
     .use(store)
     .use(router)
-    .use(FloatingVue)
-    .mount('#app')
+    .use(FloatingVue, {
+        themes: {
+            tooltip: {
+                triggers: ["click", "touch", "hover", "focus"],
+            },
+        },
+    })
+    .mount("#app");

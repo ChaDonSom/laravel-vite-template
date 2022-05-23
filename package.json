@@ -34,7 +34,7 @@
         "material-components-web": "^14.0.0",
         "pinia": "^2.0.9",
         "vue": "^3.2.6",
-        "vue-flatpickr-component": "^9.0.5",
+        "vue-flatpickr-component": "^9.0.6",
         "vue-router": "^4.0.12"
     }
 }

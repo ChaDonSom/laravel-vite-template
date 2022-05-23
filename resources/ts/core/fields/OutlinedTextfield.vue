@@ -15,6 +15,7 @@
           :aria-labelledby="`textfield-label-${id}`"
           :value="modelValue"
           :autofocus="autofocus"
+          v-bind="bindableAttributes"
           @focus="autoselect ? ($event.target as HTMLInputElement).select() : null"
           @input="$emit('update:modelValue', ($event?.target as HTMLInputElement)?.value)"
       >
@@ -34,7 +35,7 @@
 
 <script setup lang="ts">
 import { MDCTextField } from '@material/textfield'
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 
 const props = defineProps({
   modelValue: [String, Number],
@@ -43,6 +44,13 @@ const props = defineProps({
   helper: String,
   autoselect: Boolean,
   autofocus: Boolean,
+  step: [String, Number],
+})
+
+const bindableAttributes = computed(() => {
+  let result: { [key: string]: any } = {}
+  if (props.step) result.step = props.step
+  return result
 })
 
 const id = ref(Math.floor(Math.random() * 10000000))
