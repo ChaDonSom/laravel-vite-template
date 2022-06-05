@@ -45,7 +45,7 @@
 	</div>
 	<RouterView #default="{ Component }">
 		<transition name="page-navigation" mode="out-in">
-			<component :is="Component" v-if="hasInitiallyLoaded" v-cloak />
+			<component :is="Component" v-if="hasInitiallyLoaded" v-cloak :key="$route.path" />
 		</transition>
 	</RouterView>
 	<transition-group name="modal">
