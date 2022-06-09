@@ -85,11 +85,12 @@ export const useAuth = defineStore('auth', {
                     })
                 }
             } catch(e: any) {
+                let hadUser = Boolean(this.user)
                 this.unauthenticate()
                 this.router.push({
                     name: 'index',
                     params: {
-                        securityLoggedOut: "We've logged you out for your security."
+                        securityLoggedOut: hadUser ? "We've logged you out for your security." : null
                     }
                 })
             }
