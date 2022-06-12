@@ -87,12 +87,14 @@ export const useAuth = defineStore('auth', {
             } catch(e: any) {
                 let hadUser = Boolean(this.user)
                 this.unauthenticate()
-                this.router.push({
-                    name: 'index',
-                    params: {
-                        securityLoggedOut: hadUser ? "We've logged you out for your security." : null
-                    }
-                })
+                if (!this.guestRoutes.includes(this.router.currentRoute.value.path)) {
+                    this.router.push({
+                        name: 'index',
+                        params: {
+                            securityLoggedOut: hadUser ? "We've logged you out for your security." : null
+                        }
+                    })
+                }
             }
         },
         async register(form: { post: Function }) {
