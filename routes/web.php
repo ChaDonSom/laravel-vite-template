@@ -13,10 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return abort(403);
-})->name('app');
-
 // TODO:
 /**
  * If you choose to disable Fortify's views and you will be implementing password reset features for your application,
