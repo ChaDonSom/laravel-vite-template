@@ -100,3 +100,5 @@ npm run dev & # the Vite server
 ```
 
 **Note: use `:8000`, for Laravel's server, rather than `:3000`, for Vite's server.** The `laravel-vite` package sets things up to run vite's features from port `8000`.
+
+[View the vue readme](./vue-readme.md)
