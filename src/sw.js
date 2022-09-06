@@ -1,21 +1,26 @@
-importScripts("https://storage.googleapis.com/workbox-cdn/releases/6.2.0/workbox-sw.js");
+/* eslint-env serviceworker */
+importScripts(
+    "https://storage.googleapis.com/workbox-cdn/releases/6.2.0/workbox-sw.js"
+);
 
-const { precacheAndRoute, cleanupOutdatedCaches } = workbox.precaching
-const { clientsClaim } = workbox.core
-const { registerRoute } = workbox.routing
-const { CacheFirst, NetworkFirst } = workbox.strategies
-const { ExpirationPlugin } = workbox.expiration
-const { CacheableResponsePlugin } = workbox.cacheableResponse
+/* global workbox */
+
+const { precacheAndRoute, cleanupOutdatedCaches } = workbox.precaching;
+const { clientsClaim } = workbox.core;
+const { registerRoute } = workbox.routing;
+const { CacheFirst, NetworkFirst } = workbox.strategies;
+const { ExpirationPlugin } = workbox.expiration;
+const { CacheableResponsePlugin } = workbox.cacheableResponse;
 // import Pusher from "pusher-js/worker";
 // importScripts("https://js.pusher.com/7.0/pusher.worker.min.js");
 importScripts("https://js.pusher.com/beams/service-worker.js");
 
-self.skipWaiting()
-clientsClaim()
+self.skipWaiting();
+clientsClaim();
 
-cleanupOutdatedCaches()
+cleanupOutdatedCaches();
 
-precacheAndRoute(self.__WB_MANIFEST)
+precacheAndRoute(self.__WB_MANIFEST);
 
 registerRoute(
     /^https:\/\/fonts\.googleapis\.com\/.*/i,
@@ -42,12 +47,12 @@ registerRoute(
                 maxAgeSeconds: 31536e3, // a year
             }),
             new CacheableResponsePlugin({ statuses: [0, 200] }),
-        ]
+        ],
     })
 );
 
 // The external icons
-let iconUrls = [
+const iconUrls = [
     "https://laravel.com/img/logomark.min.svg",
     "https://laravel-vite.innocenzi.dev/logo.svg",
     "https://vitejs.dev/logo.svg",
@@ -72,7 +77,7 @@ registerRoute(
 );
 
 registerRoute(
-    ({ url: e }) => ("/" == e.pathname || "" == e.pathname),
+    ({ url: e }) => "/" == e.pathname || "" == e.pathname,
     new NetworkFirst({
         cacheName: "index-page-cache",
         plugins: [
