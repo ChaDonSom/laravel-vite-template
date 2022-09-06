@@ -25,7 +25,7 @@ export default ({ mode }: { mode: string }) => {
                 srcDir: "./src",
                 injectManifest: {
                     swDest:
-                        process.env.VITE_APP_ENV == "production"
+                        mode == "production"
                             ? "dist/sw.js"
                             : "dist/dev-sw.js",
                 },
