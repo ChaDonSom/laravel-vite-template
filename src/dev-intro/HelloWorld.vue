@@ -12,7 +12,7 @@
         <div class="text-center m-3">
             <div class="flex justify-center">
                 <img
-                    :src="vite_asset('android-chrome-512x512.png')"
+                    src="/android-chrome-512x512.png"
                     class="m-5 w-3/12"
                 />
             </div>
@@ -84,14 +84,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, defineComponent, reactive, onMounted } from "vue";
+import { ref, onMounted } from "vue";
 import Button from "@/core/buttons/Button.vue";
 import {
     breakpointsTailwind,
     useBreakpoints,
-    useMediaQuery,
 } from "@vueuse/core";
-import { vite_asset } from "@/core/utilities/build";
 import { useAuth } from "../core/users/auth";
 import { useEcho } from "../store/echo";
 import axios from "axios";
@@ -119,16 +117,6 @@ const stack = ref([
         image: "https://laravel.com/img/logomark.min.svg",
     },
     {
-        title: "Laravel Vite",
-        link: "https://laravel-vite.innocenzi.dev",
-        image: "https://laravel-vite.innocenzi.dev/logo.svg",
-    },
-    {
-        title: "Vue Router",
-        link: "https://next.router.vuejs.org/",
-        image: "/images/vue_logo.png",
-    },
-    {
         title: "Vue 3",
         link: "https://v3.vuejs.org/",
         image: "/images/vue_logo.png",
@@ -142,11 +130,6 @@ const stack = ref([
         title: "TypeScript",
         link: "https://www.typescriptlang.org/",
         image: "https://upload.wikimedia.org/wikipedia/commons/4/4c/Typescript_logo_2020.svg",
-    },
-    {
-        title: "Pinia",
-        link: "https://pinia.vuejs.org/",
-        image: "https://pinia.vuejs.org/logo.svg",
     },
     {
         title: "Tailwind",

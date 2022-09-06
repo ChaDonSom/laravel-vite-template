@@ -2,6 +2,7 @@
     <Head>
         <title>{{ title }}</title>
         <link rel="manifest" href="/manifest.json" v-if="prod">
+        <link ref="favicon" href="/favicon.ico">
     </Head>
     <div class="fixed top-1 left-0 right-0 flex justify-center z-10">
         <transition name="offline-toast" mode="out-in">
