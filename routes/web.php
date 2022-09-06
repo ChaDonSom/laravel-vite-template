@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return response()->file('/dist/index.html');
+    return response()->file('./dist/index.html');
 })->name('app');
 
 // TODO:
