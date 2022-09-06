@@ -8,7 +8,6 @@ import process from "node:process";
 export default ({ mode }: { mode: string }) => {
     process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
     const enableSW = process.env.VITE_ENABLE_SERVICE_WORKER;
-    console.log(enableSW, enableSW == "true");
     return defineConfig({
         publicDir: "./src/static",
         plugins: [
@@ -26,21 +25,21 @@ export default ({ mode }: { mode: string }) => {
                 srcDir: "./src",
                 injectManifest: {
                     swDest:
-                        process.env.APP_ENV == "production"
+                        process.env.VITE_APP_ENV == "production"
                             ? "dist/sw.js"
                             : "dist/dev-sw.js",
                 },
                 manifest: {
-                    id: (process.env.APP_NAME ?? "")
+                    id: (process.env.VITE_APP_NAME ?? "")
                         .split(" ")
                         .map(
                             (str) => str.charAt(0).toLowerCase() + str.slice(1)
                         )
                         .join("-"),
-                    name: process.env.APP_NAME,
-                    short_name: process.env.PWA_SHORT_NAME,
-                    description: process.env.PWA_DESCRIPTION,
-                    theme_color: process.env.PWA_THEME_COLOR,
+                    name:        process.env.VITE_APP_NAME,
+                    short_name:  process.env.VITE_PWA_SHORT_NAME,
+                    description: process.env.VITE_PWA_DESCRIPTION,
+                    theme_color: process.env.VITE_PWA_THEME_COLOR,
                     start_url: "/?standalone=true",
                     icons: [
                         {
@@ -73,10 +72,10 @@ export default ({ mode }: { mode: string }) => {
                 process.env.VITE_DEV_SERVER_URL?.split(":")?.[2] ?? 3000
             ),
             proxy: {
-                "/api": process.env.VITE_API_URL ?? "http://localhost",
-                "/sanctum": process.env.VITE_API_URL ?? "http://localhost",
-                "/login": process.env.VITE_API_URL ?? "http://localhost",
-                "/logout": process.env.VITE_API_URL ?? "http://localhost",
+                "/api":      process.env.VITE_API_URL ?? "http://localhost",
+                "/sanctum":  process.env.VITE_API_URL ?? "http://localhost",
+                "/login":    process.env.VITE_API_URL ?? "http://localhost",
+                "/logout":   process.env.VITE_API_URL ?? "http://localhost",
                 "/register": process.env.VITE_API_URL ?? "http://localhost",
             },
         },
