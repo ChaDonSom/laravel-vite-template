@@ -4,7 +4,7 @@
     "version": "0.0.1",
     "scripts": {
         "start": "concurrently \"php artisan serve\" \"php artisan queue:listen\" \"npm run dev\"",
-        "production": "build",
+        "production": "npm run build",
         "dev": "vite",
         "build": "run-p type-check build-only",
         "preview": "vite preview --port 4173",
