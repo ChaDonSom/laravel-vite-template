@@ -73,7 +73,6 @@ export const useAuth = defineStore("auth", {
                               }
                             : undefined,
                     });
-                    console.log("beams.tokenProvider: ", beams.tokenProvider);
                     console.log("beams.beams: ", beams.beams);
                     if (!beams.started) beams.start();
                     beams.waitTillStarted().then(() => {

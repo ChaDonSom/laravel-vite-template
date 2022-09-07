@@ -71,11 +71,8 @@ export default ({ mode }: { mode: string }) => {
                 process.env.VITE_DEV_SERVER_URL?.split(":")?.[2] ?? 3000
             ),
             proxy: {
-                "/api": process.env.VITE_API_URL ?? "http://localhost",
-                "/sanctum": process.env.VITE_API_URL ?? "http://localhost",
-                "/login": process.env.VITE_API_URL ?? "http://localhost",
-                "/logout": process.env.VITE_API_URL ?? "http://localhost",
-                "/register": process.env.VITE_API_URL ?? "http://localhost",
+                "^/(api|sanctum|login|logout|register|user|_ignition|password-reset).*":
+                    process.env.VITE_API_URL ?? "http://localhost",
             },
         },
     });
