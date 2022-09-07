@@ -139,7 +139,7 @@ const stack = ref([
     {
         title: "Material",
         link: "https://github.com/material-components/material-components-web",
-        image: "/images/material_components_logo.jpg",
+        image: "/images/material_components_web_logo.png",
     },
     {
         title: "Vue Use",
