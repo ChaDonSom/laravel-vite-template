@@ -1,29 +1,62 @@
-import axios from "axios";
+import axios, { type AxiosResponse } from "axios";
 import { defineStore } from "pinia";
 import LogRocket from "logrocket";
 import { useBeams } from "@/store/beams";
 import { useModals } from "@/store/modals";
 
+const VITE_SESSION_LIFETIME = import.meta.env.VITE_SESSION_LIFETIME;
+console.log("VITE_SESSION_LIFETIME: ", VITE_SESSION_LIFETIME);
+
+export type User = {
+    id: number;
+    [key: string]: any;
+    account_holders?: { id: number; users: User[] }[];
+};
+
 export const useAuth = defineStore("auth", {
     state: () => ({
-        user: <{ id: number; [key: string]: any } | null>null,
+        user: <User | null>null,
         sanctumCookie: null as string | null,
         authenticated: false,
         axiosResponseInterceptor: <number | null>null,
+        checkSessionTimeoutStopNumber: <number | null>null,
         guestRoutes: <string[]>["/", "/login", "/register"],
     }),
     actions: {
+        axiosResponseInterceptorSuccess(response: AxiosResponse) {
+            if (this.checkSessionTimeoutStopNumber) {
+                clearTimeout(this.checkSessionTimeoutStopNumber);
+            }
+            this.checkSessionTimeoutStopNumber = setTimeout(() => {
+                this.getUser(false);
+            }, 1000 * 60 * VITE_SESSION_LIFETIME);
+            return response
+        },
+        axiosResponseInterceptorError(error: any) {
+            if (error.response?.status == 419 || error.response?.status == 401) {
+                this.unauthenticate()
+                this.router.push({ name: 'index' })
+            }
+            return Promise.reject(error)
+        },
         async getSanctumCookie() {
             // We don't necessarily need to keep this in store, axios does.
             this.sanctumCookie = await axios.get("/sanctum/csrf-cookie");
         },
-        async getUser() {
+        async getUser(registerAPIs = true) {
             try {
                 const response = await axios.get("/api/user");
                 this.user = response.data;
                 this.authenticated = true;
 
-                if (this.user?.id) {
+                if (this.user?.id && registerAPIs) {
+                    // Set up response interceptors if they haven't been (e.g. refresh)
+                    if (!this.axiosResponseInterceptor) {
+                        this.axiosResponseInterceptor = axios.interceptors.response.use(
+                            this.axiosResponseInterceptorSuccess,
+                            this.axiosResponseInterceptorError
+                        )
+                    }
                     // Identify the authenticated user to LogRocket
                     LogRocket.identify(String(this.user.id), this.user);
 
@@ -57,13 +90,15 @@ export const useAuth = defineStore("auth", {
                     });
                 }
             } catch (e: any) {
+                let hadUser = Boolean(this.user);
                 this.unauthenticate();
-                if (
-                    !this.guestRoutes.includes(
-                        this.router.currentRoute.value.path
-                    )
-                ) {
-                    this.router.push({ name: "index" });
+                if (!this.guestRoutes.includes(this.router.currentRoute.value.path)) {
+                    this.router.push({
+                        name: 'index',
+                        params: {
+                            securityLoggedOut: hadUser ? "We've logged you out for your security." : null
+                        }
+                    })
                 }
             }
         },
@@ -72,17 +107,8 @@ export const useAuth = defineStore("auth", {
                 const data = await form.post();
                 this.authenticated = true;
                 this.axiosResponseInterceptor = axios.interceptors.response.use(
-                    undefined,
-                    (error: any) => {
-                        if (
-                            error.response?.status == 419 ||
-                            error.response?.status == 401
-                        ) {
-                            this.unauthenticate();
-                            this.router.push({ name: "index" });
-                        }
-                        return Promise.reject(error);
-                    }
+                    this.axiosResponseInterceptorSuccess,
+                    this.axiosResponseInterceptorError
                 );
                 this.getUser();
                 this.router.push({ name: "index" });
@@ -95,17 +121,8 @@ export const useAuth = defineStore("auth", {
                 const data = await form.post();
                 this.authenticated = true;
                 this.axiosResponseInterceptor = axios.interceptors.response.use(
-                    undefined,
-                    (error: any) => {
-                        if (
-                            error.response?.status == 419 ||
-                            error.response?.status == 401
-                        ) {
-                            this.unauthenticate();
-                            this.router.push({ name: "index" });
-                        }
-                        return Promise.reject(error);
-                    }
+                    this.axiosResponseInterceptorSuccess,
+                    this.axiosResponseInterceptorError
                 );
                 this.getUser();
                 this.router.push({ name: "index" });

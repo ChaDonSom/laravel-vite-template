@@ -67,5 +67,11 @@ const app = createApp(App)
     .use(store)
     .use(router)
     .use(createHead())
-    .use(FloatingVue)
+    .use(FloatingVue, {
+        themes: {
+            tooltip: {
+                triggers: ["click", "touch", "hover", "focus"],
+            },
+        },
+    })
     .mount("#app");

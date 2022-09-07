@@ -54,3 +54,11 @@
 .opacity-0-scale-097-150ms-leave-active {
 	position: absolute;
 }
+
+.circular-scrim-enter-from, .circular-scrim-leave-to {
+	opacity: 0;
+	backdrop-filter: none;
+}
+.circular-scrim-enter-active, .circular-scrim-leave-active {
+	transition: opacity 150ms ease-out, backdrop-filter 150ms ease-out;
+}

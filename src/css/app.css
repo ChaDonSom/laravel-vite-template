@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+*:focus-visible {
+    outline: none;
+}
+
 body {
     font-family: Nunito Sans, Helvetica, sans-serif;
 }

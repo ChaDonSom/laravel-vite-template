@@ -25,9 +25,7 @@ export default ({ mode }: { mode: string }) => {
                 srcDir: "./src",
                 injectManifest: {
                     swDest:
-                        mode == "production"
-                            ? "dist/sw.js"
-                            : "dist/dev-sw.js",
+                        mode == "production" ? "dist/sw.js" : "dist/dev-sw.js",
                 },
                 manifest: {
                     id: (process.env.VITE_APP_NAME ?? "")
@@ -36,8 +34,8 @@ export default ({ mode }: { mode: string }) => {
                             (str) => str.charAt(0).toLowerCase() + str.slice(1)
                         )
                         .join("-"),
-                    name:        process.env.VITE_APP_NAME,
-                    short_name:  process.env.VITE_PWA_SHORT_NAME,
+                    name: process.env.VITE_APP_NAME,
+                    short_name: process.env.VITE_PWA_SHORT_NAME,
                     description: process.env.VITE_PWA_DESCRIPTION,
                     theme_color: process.env.VITE_PWA_THEME_COLOR,
                     start_url: "/?standalone=true",
@@ -56,7 +54,8 @@ export default ({ mode }: { mode: string }) => {
                             src: "android-chrome-512x512.png",
                             sizes: "512x512",
                             type: "image/png",
-                            purpose: "any maskable",
+                            // "purpose": "any maskable"
+                            // Use this if your icon can take the cropping (Laravel-Vite's icon can't)
                         },
                     ],
                 },
@@ -72,10 +71,10 @@ export default ({ mode }: { mode: string }) => {
                 process.env.VITE_DEV_SERVER_URL?.split(":")?.[2] ?? 3000
             ),
             proxy: {
-                "/api":      process.env.VITE_API_URL ?? "http://localhost",
-                "/sanctum":  process.env.VITE_API_URL ?? "http://localhost",
-                "/login":    process.env.VITE_API_URL ?? "http://localhost",
-                "/logout":   process.env.VITE_API_URL ?? "http://localhost",
+                "/api": process.env.VITE_API_URL ?? "http://localhost",
+                "/sanctum": process.env.VITE_API_URL ?? "http://localhost",
+                "/login": process.env.VITE_API_URL ?? "http://localhost",
+                "/logout": process.env.VITE_API_URL ?? "http://localhost",
                 "/register": process.env.VITE_API_URL ?? "http://localhost",
             },
         },

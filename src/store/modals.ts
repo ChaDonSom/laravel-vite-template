@@ -20,9 +20,6 @@ export const useModals = defineStore("modals", {
     actions: {
         open(payload: Omit<ModalListing, "id">): number | string {
             const id = `modal-${this.keys.length}`;
-            const urlModals = (this.router.currentRoute.value.query.modals ??
-                []) as string[];
-            this.router.push({ query: { modals: [...urlModals, id] } });
             this.data[id] = {
                 ...payload,
                 id,
@@ -30,7 +27,6 @@ export const useModals = defineStore("modals", {
             return id;
         },
         close(id: number | string) {
-            this.router.back();
             delete this.data[id];
         },
         async confirm(message?: string) {

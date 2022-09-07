@@ -53,12 +53,12 @@
     </div>
     <RouterView #default="{ Component }">
         <transition name="page-navigation" mode="out-in">
-            <component :is="Component" v-if="hasInitiallyLoaded" v-cloak />
+            <component :is="Component" v-if="hasInitiallyLoaded" v-cloak :key="$route.path" />
         </transition>
     </RouterView>
     <transition-group name="modal">
         <Component
-            v-for="modal of modalsByUrlQuery"
+            v-for="modal of modals.values"
             :key="modal.id"
             :is="modal.modal"
             v-bind="modal.props"
@@ -70,10 +70,9 @@
 <script setup lang="ts">
 import { useAuth } from "@/core/users/auth";
 import Button from "@/core/buttons/Button.vue";
-import { computed, onMounted, ref, watch } from "vue";
-import { useOnline, useTitle, useWindowScroll } from "@vueuse/core";
+import { onMounted, ref, watch } from "vue";
+import { useOnline, useWindowScroll } from "@vueuse/core";
 import { useModals } from "@/store/modals";
-import { useRoute } from "vue-router";
 import { Head } from "@vueuse/head"
 
 const title = import.meta.env.VITE_APP_NAME
@@ -106,15 +105,6 @@ onMounted(async () => {
 });
 
 const modals = useModals();
-const route = useRoute();
-const modalsByUrlQuery = computed(() => {
-    const queryModals = (route.query.modals ?? []) as string[] | string;
-    return typeof queryModals == "string"
-        ? modals.data[queryModals]
-            ? [modals.data[queryModals]]
-            : []
-        : queryModals.map((i) => modals.data[i]).filter((i) => i);
-});
 </script>
 
 <style scoped lang="scss">

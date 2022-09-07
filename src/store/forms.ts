@@ -86,7 +86,7 @@ export function useForm<T>(url: string, form: T) {
         function onError(e: any) {
             processing.value = false;
             processingDelete.value = false;
-            const data = e.response?.data;
+            const data = e.response?.data ?? e;
             const status = e.response?.status;
             httpStatus.value = status;
             const errs: { [key: string]: any } = {};
@@ -98,12 +98,26 @@ export function useForm<T>(url: string, form: T) {
                         errs[key] = data.errors[key].join("; ");
                 });
             } else {
+                console.log('e: ', e)
                 console.log("data: ", data);
-                if (data?.message) errs.message = data?.message;
-                else {
-                    if (e.message) {
+                if (status == 404) {
+                    errs.message =
+                        data?.message ??
+                        `Route not found: ${e.response?.request?.responseURL}`;
+                } else if (data?.message) {
+                    errs.message = data?.message;
+                } else if (data?.exception) {
+                    errs.message = `Server exception: ${data.exception}`;
+                } else {
+                    if (e.message || Object.keys(errors.value).some((i) => e.hasOwnProperty(i))) {
                         Object.keys(e).forEach((key) => (errs[key] = e[key]));
-                    } else errs.message = e.toString();
+                        if (!e.message)
+                            errs.message = Object.keys(e)
+                                .map((key) => `${key}: ${e[key]}`)
+                                .join("");
+                    } else {
+                        errs.message = e.toString();
+                    }
                 }
             }
             clearErrors();

@@ -19,6 +19,9 @@
             <h1 class="text-3xl sm:text-5xl md:text-7xl font-thin">
                 {{ msg }}
             </h1>
+			<h2 class="text-xl italic mt-3" v-if="$route.params.securityLoggedOut">
+				({{ $route.params.securityLoggedOut }})
+			</h2>
 
             <h2 class="mt-5">Material Components:</h2>
             <div class="flex justify-center gap-5">
@@ -62,20 +65,29 @@
                 >
             </div>
             <div
-                class="my-7 flex flex-col items-center justify-center gap-2"
+                class="my-7 mx-auto inline-flex flex-col items-left gap-3"
                 v-if="forgeResponse"
             >
                 <h3>My sites:</h3>
                 <p v-for="site of forgeResponse" :key="site.id">
                     <a
                         :href="`https://${site.name}`"
-                        class="flex flex-col items-center text-blue-600 visited:text-purple-600"
+                        class="flex items-center text-blue-600 visited:text-purple-600"
                     >
-                        <img
-                            :src="`https://${site.name}/favicon.ico`"
-                            class="h-14 w-14"
-                        />
-                        <span>{{ site.name }}</span>
+						<img
+								:src="`https://${site.name}/android-chrome-512x512.png`"
+								class="h-14 w-14"
+						>
+						<span class="ml-2">
+							{{
+								// Transform the site name from kebab-case in the URL to Title Case for presentation
+								site.name
+									.split('.somero.dev')[0]
+									.split('-')
+									.map(word => (word.charAt(0).toUpperCase() + word.slice(1)))
+									.join(' ')
+							}}
+						</span>
                     </a>
                 </p>
             </div>
