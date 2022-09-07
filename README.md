@@ -6,11 +6,6 @@
 
 &nbsp;
 
-<a href="https://laravel-vite.innocenzi.dev" target="_blank" title="Laravel Vite">
-    <img src="https://laravel-vite.innocenzi.dev/logo.svg" height="55">
-</a> The Laravel Vite package ties Laravel's frontend build process to Vite, allowing us to use Vite with Laravel having minimal configuration.
-
-&nbsp;
 
 <a href="https://vitejs.dev" target="_blank" title="Vite">
     <img src="https://vitejs.dev/logo.svg" height="55">
@@ -21,12 +16,6 @@
 <a href="https://vuejs.org/" target="_blank" title="Vue 3">
     <img src="https://vuejs.org/images/logo.png" height="55">
 </a> Vue 3 is powerful, fast, and lends itself to clean organization through its Composition API.
-
-&nbsp;
-
-<a href="https://next.router.vuejs.org/" target="_blank" title="Vue Router">
-    <img src="https://vuejs.org/images/logo.png" height="55">
-</a> Vue Router allows us to handle SPA navigation on our frontend.
 
 &nbsp;
 
@@ -48,11 +37,6 @@
 
 &nbsp;
 
-<a href="https://pinia.vuejs.org/" target="_blank" title="Pinia">
-    <img src="https://pinia.vuejs.org/logo.svg" height="55">
-</a> Pinia provides a type-safe, structured way to share data between components.
-
-&nbsp;
 
 <a href="https://tailwindcss.com/" target="_blank" title="Tailwind">
     <img src="https://pbs.twimg.com/profile_images/1468993891584073729/a_op8KnL_400x400.jpg" height="55">
@@ -90,15 +74,25 @@ npm install
 npm start
 ```
 
-Or, if you want background tasks for each process:
-```bash
-php artisan serve & # the Laravel server
+[View the Vue readme](./vue-readme.md)
 
-php artisan queue:listen & # if you'd like to run Laravel queue jobs
+[View the Laravel readme](./laravel-readme.md)
 
-npm run dev & # the Vite server
+# Publish it
+
+## Using Laravel Forge
+
+**Update your nginx config:** provide two different `location` blocks: one for the frontend, one for the backend. Use explicitly-registered routes for your backend, for both legibility and safety (and because no other way works). These will replace the existing `location /` block.
+```nginx
+location / {
+    # {{ ROOT_PATH }}/dist in a Forge Template
+    root /home/user/domain.com/dist;
+    try_files $uri $uri/ /index.html;
+}
+
+location ~ ^\/(api|login|logout|register|sanctum).* {
+    # {{ PATH }} in a Forge Template
+    root /home/user/domain.com/public;
+    try_files $uri $uri/ /index.php?$query_string;
+}
 ```
-
-**Note: use `:8000`, for Laravel's server, rather than `:3000`, for Vite's server.** The `laravel-vite` package sets things up to run vite's features from port `8000`.
-
-[View the vue readme](./vue-readme.md)
