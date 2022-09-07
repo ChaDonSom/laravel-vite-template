@@ -134,12 +134,12 @@ const stack = ref([
     {
         title: "Tailwind",
         link: "https://tailwindcss.com/",
-        image: "https://pbs.twimg.com/profile_images/1468993891584073729/a_op8KnL_400x400.jpg",
+        image: "/images/tailwind_logo.png",
     },
     {
         title: "Material",
         link: "https://github.com/material-components/material-components-web",
-        image: "https://pbs.twimg.com/profile_images/925576484122779648/ucVTUoPg_400x400.jpg",
+        image: "/images/material_components_logo.jpg",
     },
     {
         title: "Vue Use",

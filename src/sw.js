@@ -38,7 +38,7 @@ registerRoute(
 );
 
 registerRoute(
-    /\/build\/assets\/.*/i,
+    /\/assets\/.*/i,
     new CacheFirst({
         cacheName: "assets-cache",
         plugins: [
@@ -58,8 +58,6 @@ const iconUrls = [
     "https://vitejs.dev/logo.svg",
     "https://pinia.vuejs.org/logo.svg",
     "https://upload.wikimedia.org/wikipedia/commons/4/4c/Typescript_logo_2020.svg",
-    "https://pbs.twimg.com/profile_images/1468993891584073729/a_op8KnL_400x400.jpg",
-    "https://pbs.twimg.com/profile_images/925576484122779648/ucVTUoPg_400x400.jpg",
     "https://d33wubrfki0l68.cloudfront.net/2f6479d73bc25170dc532dd42e059166573bf478/61057/favicon.svg",
 ];
 registerRoute(
