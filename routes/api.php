@@ -2,7 +2,6 @@
 
 use App\Notifications\SelfNotification;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Route;
 
