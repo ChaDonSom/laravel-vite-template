@@ -19,7 +19,7 @@ export const useAuth = defineStore("auth", {
         sanctumCookie: null as string | null,
         authenticated: false,
         axiosResponseInterceptor: <number | null>null,
-        checkSessionTimeoutStopNumber: <number | null>null,
+        checkSessionTimeoutStopNumber: <ReturnType<typeof setTimeout> | null>null,
         guestRoutes: <string[]>["/", "/login", "/register"],
     }),
     actions: {
