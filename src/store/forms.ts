@@ -156,6 +156,7 @@ export function useForm<T>(url: string, form: T) {
 
     return reactive({
         ...toRefs(internalForm),
+        internalForm,
         isDirty,
         httpStatus,
         reset,
