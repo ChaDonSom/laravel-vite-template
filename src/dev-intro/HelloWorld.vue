@@ -104,7 +104,7 @@ import {
 } from "@vueuse/core";
 import { useAuth } from "../core/users/auth";
 import { useEcho } from "../store/echo";
-import axios from "axios";
+import apiAxios from "@/core/utilities/axios";
 
 const props = defineProps({
     msg: {
@@ -187,7 +187,7 @@ onMounted(() => {
 });
 
 function sendPushNotification() {
-    axios.post("/api/beams/self-notification", {
+    apiAxios.post("/api/beams/self-notification", {
         title: "Hello World!",
         message: "Hi there, a notification from Laravel Vite Template!",
     });
@@ -199,7 +199,7 @@ const forgeResponse = ref<Array<{
     name: string;
 }> | null>(null);
 onMounted(async () => {
-    const response = await axios.get("/api/sites");
+    const response = await apiAxios.get("/api/sites");
     forgeResponse.value = response.data.sites.filter((site: any) => {
         return site.status == "installed" && site.name != "default";
     });

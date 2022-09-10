@@ -1,7 +1,6 @@
-import axios from "axios";
 import type { AxiosResponse } from "axios";
 import { computed, reactive, ref, toRefs, watch } from "vue";
-import type { ComputedRef, UnwrapNestedRefs } from "vue";
+import apiAxios from "@/core/utilities/axios";
 
 export function useForm<T>(url: string, form: T) {
     const internalForm = reactive<object & T & { id?: number }>(
@@ -21,13 +20,13 @@ export function useForm<T>(url: string, form: T) {
         });
     }
     const errors = ref(
-        Object.keys(form).reduce((a, c) => {
+        Object.keys(form as Object).reduce((a, c) => {
             a[c] = undefined;
             return a;
         }, {} as { [key: string]: string | undefined })
     );
     function clearErrors() {
-        errors.value = Object.keys(form).reduce((a, c) => {
+        errors.value = Object.keys(form as Object).reduce((a, c) => {
             a[c] = undefined;
             return a;
         }, {} as { [key: string]: string | undefined });
@@ -55,11 +54,11 @@ export function useForm<T>(url: string, form: T) {
             let response: AxiosResponse<T> | AxiosResponse<string> | null =
                 null;
             if (method === "delete") {
-                response = (await axios
+                response = (await apiAxios
                     .delete(internalUrl ?? url)
                     .catch((e: any) => onError(e))) as AxiosResponse<string>;
             } else {
-                response = (await (axios as any)
+                response = (await (apiAxios as any)
                     [method](internalUrl ?? url, internalForm)
                     .catch((e: any) => onError(e))) as AxiosResponse<T>;
             }
