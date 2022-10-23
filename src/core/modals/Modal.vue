@@ -1,5 +1,10 @@
 <template>
-    <div class="modal-mask bg-neutral-500/50 backdrop-blur-2xs" @click.self="$emit('close')" ref="elRef">
+    <div
+        class="modal-mask bg-neutral-500/50 backdrop-blur-2xs"
+        @click.self="$emit('close')"
+        ref="elRef"
+        style="will-change: backdrop-filter;"
+    >
         <div class="modal-wrapper" @click.self="$emit('close')">
             <div class="modal-container" ref="containerRef">
                 <div

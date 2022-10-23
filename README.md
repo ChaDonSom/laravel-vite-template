@@ -90,7 +90,7 @@ location / {
     try_files $uri $uri/ /index.html;
 }
 
-location ~ ^\/(api|login|logout|register|sanctum).* {
+location ~ ^\/(api|sanctum|login|logout|register|user|_ignition|password-reset|clockwork|__clockwork).* {
     # {{ PATH }} in a Forge Template
     root /home/user/domain.com/public;
     try_files $uri $uri/ /index.php?$query_string;

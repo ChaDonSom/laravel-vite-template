@@ -3,7 +3,7 @@
     <h1 class="my-6 text-5xl font-thin">{{ form.name ? form.name : '??' }}'s Profile</h1>
     <Textfield v-model="form.name" :error="form.errors.name" autoselect>Name</Textfield>
     <Textfield v-model="form.email" :error="form.errors.email" autoselect>Email</Textfield>
-    <SaveButton @click="form.submit('put')" :disabled="form.processing" :loading="form.processing" />
+    <SaveButton @click="submit" :disabled="form.processing" :loading="form.processing" />
 
     <Button @click="changePassword">Change password</Button>
 
@@ -28,6 +28,11 @@ import PasswordModalVue from '@/core/users/auth/PasswordModal.vue';
 const auth = useAuth()
 
 const form = useForm('/user/profile-information', JSON.parse(JSON.stringify(auth.user)) as User)
+
+async function submit() {
+  await form.submit('put')
+  auth.user = JSON.parse(JSON.stringify(form.internalForm))
+}
 
 const modals = useModals()
 function changePassword() {
