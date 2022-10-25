@@ -77,12 +77,12 @@ class Scene extends Phaser.Scene {
   }
 
   preload() {
-    this.load.image('sky', 'experiments/phaser-tutorial/sky.png');
-    this.load.image('ground', 'experiments/phaser-tutorial/platform.png');
-    this.load.image('star', 'experiments/phaser-tutorial/star.png');
-    this.load.image('bomb', 'experiments/phaser-tutorial/bomb.png');
+    this.load.image('sky', '/images/experiments/phaser-tutorial/sky.png');
+    this.load.image('ground', '/images/experiments/phaser-tutorial/platform.png');
+    this.load.image('star', '/images/experiments/phaser-tutorial/star.png');
+    this.load.image('bomb', '/images/experiments/phaser-tutorial/bomb.png');
     this.load.spritesheet('dude',
-      'experiments/phaser-tutorial/dude.png',
+      '/images/experiments/phaser-tutorial/dude.png',
       { frameWidth: 32, frameHeight: 48 }
     );
   }
