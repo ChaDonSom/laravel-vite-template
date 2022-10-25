@@ -91,14 +91,16 @@ export const useAuth = defineStore("auth", {
             } catch (e: any) {
                 let hadUser = Boolean(this.user);
                 this.unauthenticate();
-                if (!this.guestRoutes.includes(this.router.currentRoute.value.path)) {
-                    this.router.push({
-                        name: 'index',
-                        params: {
-                            securityLoggedOut: hadUser ? "We've logged you out for your security." : null
-                        }
-                    })
-                }
+                // Disabled for now, so guests can access all experiments by default
+                // Maybe we should list them out explicitly so we can make experiments that require a user?
+                // if (!this.guestRoutes.includes(this.router.currentRoute.value.path)) {
+                //     this.router.push({
+                //         name: 'index',
+                //         params: {
+                //             securityLoggedOut: hadUser ? "We've logged you out for your security." : null
+                //         }
+                //     })
+                // }
             }
         },
         async register(form: { post: () => Promise<any> }) {
