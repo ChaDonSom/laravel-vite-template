@@ -10,7 +10,7 @@
           <span class="mdc-notched-outline__trailing"></span>
         </span>
         <span class="mdc-select__selected-text-container">
-          <span id="demo-selected-text" class="mdc-select__selected-text"></span>
+          <span id="demo-selected-text" class="mdc-select__selected-text">{{ optionLabelForModelValue }}</span>
         </span>
         <span class="mdc-select__dropdown-icon">
           <svg class="mdc-select__dropdown-icon-graphic" viewBox="7 10 10 5" focusable="false">
@@ -81,12 +81,19 @@ const emit = defineEmits([
   'update:modelValue'
 ])
 
+const optionLabelForModelValue = ref('')
+
 const mainRef = ref<HTMLElement|null>(null)
 const select = ref<MDCSelect|null>(null)
 watch(
   () => mainRef.value,
   () => {
     if (mainRef.value) {
+      let selectedOption = mainRef.value.querySelector('li.mdc-deprecated-list-item--selected') as HTMLElement | null
+      if (selectedOption) {
+        if (selectedOption.innerText) optionLabelForModelValue.value = selectedOption.innerText
+      }
+
       select.value = new MDCSelect(mainRef.value)
 
       select.value.listen('MDCSelect:change', () => {
