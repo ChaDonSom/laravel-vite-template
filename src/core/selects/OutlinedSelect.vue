@@ -133,5 +133,10 @@ watch(
 @use "@/css/mdc-theme";
 @use "@material/list/mdc-list";
 @use "@material/menu-surface/mdc-menu-surface";
+@use "@material/menu-surface";
 @use "@material/menu/mdc-menu";
+
+.mdc-menu {
+  @include menu-surface.shape-radius(mdc-theme.$menu-shape-radius);
+}
 </style>
