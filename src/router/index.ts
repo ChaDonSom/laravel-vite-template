@@ -1,15 +1,19 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 import type { RouteRecordRaw } from "vue-router";
-import Index from "@/experiments/Index.vue";
+import HelloWorld from "@/dev-intro/HelloWorld.vue";
 import authRoutes from "@/router/auth";
-import experimentsRoutes from "@/router/experiments";
 
 let routes: RouteRecordRaw[] = [
     {
-        name: "index", path: "/", component: Index, props: true,
+        name: "index",
+        path: "/",
+        component: HelloWorld,
+        props: {
+            msg: "Hello Laravel + Vite",
+        },
     },
 ];
-routes = routes.concat(authRoutes).concat(experimentsRoutes);
+routes = routes.concat(authRoutes);
 
 export const router = createRouter({
     history: createWebHashHistory(),
