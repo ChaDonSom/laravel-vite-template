@@ -15,19 +15,19 @@
             </div>
         </transition>
     </div>
-    <div class="fixed top-1 left-1 flex z-10">
+    <!-- <div class="fixed top-1 left-1 flex z-10">
         <transition name="auth-buttons" mode="out-in">
             <RouterLink to="/" v-if="$route.name != 'index'">
                 <Button><template #leading-icon>home</template>Home</Button>
             </RouterLink>
         </transition>
-    </div>
+    </div> -->
     <div class="fixed top-1 right-1 flex z-10">
         <transition name="auth-buttons" mode="out-in">
             <div v-if="auth.authenticated">
                 <Button @click="auth.logout">Log out</Button>
             </div>
-            <div v-else class="flex">
+            <!-- <div v-else class="flex">
                 <transition name="auth-buttons" mode="out-in">
                     <div v-if="$route.name == 'login'">
                         <RouterLink to="register">
@@ -48,7 +48,7 @@
                         </RouterLink>
                     </div>
                 </transition>
-            </div>
+            </div> -->
         </transition>
     </div>
     <RouterView #default="{ Component }">
