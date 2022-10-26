@@ -20,7 +20,7 @@
         <Button @click="sendPushNotification">Send myself a push notification</Button>
       </div>
     </div> -->
-    <div id="phaser-game" :key="gameKey" ref="phaserGameRef" class="w-full h-full"></div>
+    <div id="phaser-game" :key="gameKey" ref="phaserGameRef" class="w-full h-full flex justify-center items-center"></div>
   </div>
 </template>
 
@@ -77,6 +77,7 @@ class Scene extends Phaser.Scene {
   }
 
   preload() {
+    console.log('preload')
     this.load.image('sky', '/images/experiments/phaser-tutorial/sky.png');
     this.load.image('ground', '/images/experiments/phaser-tutorial/platform.png');
     this.load.image('star', '/images/experiments/phaser-tutorial/star.png');
@@ -98,6 +99,7 @@ class Scene extends Phaser.Scene {
     platforms.value.create(50, 250, 'ground');
     platforms.value.create(750, 220, 'ground');
 
+    players.value = []
     players.value.push(this.physics.add.sprite(100, 450, 'dude'))
     players.value.push(this.physics.add.sprite(100, 450, 'dude'))
     players.value[1].setTint(0x00ffff);
@@ -149,6 +151,12 @@ class Scene extends Phaser.Scene {
       player.setTint(0xff0000);
       player.anims.play('turn');
       gameOver.value = true;
+      this.add.text(100, 300, 'Game over: hit any key to restart', { fontSize: '32px',/*  fill: '#000' */ });
+      const restart = () => {
+        location.reload()
+      }
+      this.input.on('pointerdown', restart)
+      this.input.keyboard.on('keydown', restart)
     }
 
     for (let player of players.value) {
@@ -198,7 +206,7 @@ class Scene extends Phaser.Scene {
   }
 
   update() {
-    // console.log('update')
+    if (gameOver.value) return
     let controls = [
       {
         left: cursors.value?.left.isDown,
@@ -237,6 +245,10 @@ class Scene extends Phaser.Scene {
       }
     }
   }
+
+  disableClashingInput() {
+    this.input.keyboard.enabled = false
+  }
 }
 
 const config = {
@@ -264,8 +276,11 @@ watch(
   () => phaserGameRef.value,
   () => {
     if (!phaserGameRef.value) return
-    if (game.value) game.value.destroy(true)
-    game.value = new Phaser.Game(config);
+    if (game.value) {
+      game.value.destroy(true, false)
+      game.value.canvas?.parentNode?.removeChild(game.value.canvas) //removes the old game canvas
+    }
+    game.value = new Phaser.Game(config)
   }
 )
 </script>
