@@ -59,7 +59,7 @@
 
 <script lang="ts" setup>
 import { MDCSelect } from '@material/select'
-import { ref, watch } from 'vue';
+import { computed, provide, ref, toRef, watch } from 'vue';
 import SelectOption from './SelectOption.vue';
 
 const props = defineProps({
@@ -80,6 +80,8 @@ const props = defineProps({
 const emit = defineEmits([
   'update:modelValue'
 ])
+
+provide('select-value', computed(() => props.modelValue))
 
 const optionLabelForModelValue = ref('')
 
