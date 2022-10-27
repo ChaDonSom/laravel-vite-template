@@ -54,6 +54,10 @@ defineProps({
   }
 })
 
+const emit = defineEmits([
+  'update:modelValue'
+])
+
 const randomId = ref(Math.round(Math.random() * 100000).toFixed(0))
 const mdcSwitchEl = ref<HTMLButtonElement|null>(null)
 const mdcSwitch = ref<MDCSwitch|null>(null)
@@ -62,6 +66,9 @@ watch(
   () => {
     if (mdcSwitchEl.value) {
       mdcSwitch.value = new MDCSwitch(mdcSwitchEl.value)
+      mdcSwitch.value.listen('click', () => {
+        emit('update:modelValue', mdcSwitch.value?.selected)
+      })
     }
   }
 )
