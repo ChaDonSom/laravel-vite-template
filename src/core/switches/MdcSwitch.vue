@@ -1,5 +1,5 @@
 <template>
-  <div class="m-2 inline-flex gap-3">
+  <div class="m-4 inline-flex gap-3">
     <button
         :id="`basic-switch-${randomId}`"
         class="mdc-switch"
@@ -20,12 +20,12 @@
           </div>
           <div class="mdc-switch__ripple"></div>
           <div class="mdc-switch__icons">
-            <svg class="mdc-switch__icon mdc-switch__icon--on" viewBox="0 0 24 24">
+            <!-- <svg class="mdc-switch__icon mdc-switch__icon--on" viewBox="0 0 24 24">
               <path d="M19.69,5.23L8.96,15.96l-4.23-4.23L2.96,13.5l6,6L21.46,7L19.69,5.23z" />
-            </svg>
-            <svg class="mdc-switch__icon mdc-switch__icon--off" viewBox="0 0 24 24">
+            </svg> -->
+            <!-- <svg class="mdc-switch__icon mdc-switch__icon--off" viewBox="0 0 24 24">
               <path d="M20 13H4v-2h16v2z" />
-            </svg>
+            </svg> -->
           </div>
         </div>
       </div>
@@ -76,5 +76,17 @@ watch(
 
 <style lang="scss" scoped>
 @use "@/css/mdc-theme";
+@use '@material/switch';
 @use '@material/switch/styles';
+@use '@material/theme/color-palette';
+@use '@material/theme/shadow-dom';
+
+.mdc-switch {
+  @include switch.theme((
+    track-height: 22px,
+    track-shape: 44px,
+    handle-height: 18px,
+    handle-width: 18px
+  ))
+}
 </style>
