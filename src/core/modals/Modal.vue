@@ -8,7 +8,7 @@
         <div class="modal-wrapper" @click.self="$emit('close')">
             <div class="modal-container" ref="containerRef">
                 <div
-                    class="sticky top-0 bg-white z-10 top-shadow"
+                    class="sticky top-0 z-10 top-shadow"
                     :class="{
                         'pb-1': $slots.title,
                         'border-b-2 border-gray-300': scrollable,
@@ -20,7 +20,7 @@
                 </div>
                 <slot />
                 <div
-                    class="sticky bottom-0 bg-white bottom-shadow"
+                    class="sticky bottom-0 bottom-shadow"
                     :class="{
                         'h-2': !$slots.actions,
                         'border-t-2 border-gray-300': scrollable,
@@ -90,11 +90,10 @@ watch(
     margin: 0px auto;
     padding-left: 30px;
     padding-right: 30px;
-    border-width: 0px;
-    border-style: dashed;
-    border-top: 20px dashed white;
-    border-bottom: 20px dashed white;
-    background-color: #fff;
+    border-width: 0px;border-style: solid;
+    border-top: 20px solid var(--color-background-soft);
+    border-bottom: 20px solid var(--color-background-soft);
+    background-color: var(--color-background-soft);
     border-radius: 16px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
     transition: all 0.2s ease-in;
@@ -114,6 +113,7 @@ watch(
     z-index: 2;
     overflow: visible;
     transition: border 200ms ease-out;
+    background-color: var(--color-background-soft);
     &::before {
         content: "";
         display: block;
@@ -121,7 +121,7 @@ watch(
         height: 5px;
         width: 110%;
         left: -5%;
-        background-color: white;
+        background-color: var(--color-background-soft);
         z-index: 1;
     }
     &::after {
