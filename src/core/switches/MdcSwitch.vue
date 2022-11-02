@@ -11,6 +11,7 @@
         role="switch"
         :aria-checked="modelValue"
         ref="mdcSwitchEl"
+        :disabled="disabled"
     >
       <div class="mdc-switch__track"></div>
       <div class="mdc-switch__handle-track">
@@ -44,13 +45,17 @@
 import { MDCSwitch } from '@material/switch'
 import { ref, watch } from 'vue'
 
-defineProps({
+const props = defineProps({
   modelValue: {
     type: Boolean,
     default: () => false,
   },
   label: {
     type: String,
+  },
+  disabled: {
+    type: Boolean,
+    default: () => false,
   }
 })
 
@@ -71,6 +76,16 @@ watch(
       })
     }
   }
+)
+
+watch(
+  () => props.disabled,
+  () => {
+    if (mdcSwitch.value) {
+      mdcSwitch.value.disabled = props.disabled
+    }
+  },
+  { immediate: true }
 )
 </script>
 
