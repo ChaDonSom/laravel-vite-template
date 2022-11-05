@@ -16,13 +16,9 @@
             >Password</Textfield
         >
         <div>
-            <input
+            <MdcSwitch
                 v-model="form.remember"
-                type="checkbox"
-                class="ml-3"
-                id="remember"
-            />
-            <label for="remember" class="ml-1">Remember me</label>
+            >Remember me</MdcSwitch>
         </div>
         <Button
             @click="auth.login(form)"
@@ -37,7 +33,7 @@
         <transition name="error-message">
             <p
                 v-if="form.errors.message"
-                class="bg-red-200 rounded-3xl py-3 px-4 absolute"
+                class="bg-red-200 rounded-3xl py-3 px-4 absolute text-red-800"
                 style="bottom: -4rem"
             >
                 {{ form.errors.message }}
@@ -53,6 +49,7 @@ import Textfield from "../../fields/OutlinedTextfield.vue";
 import { useRouter } from "vue-router";
 import { useAuth } from "@/core/users/auth";
 import { useForm } from "@/store/forms";
+import MdcSwitch from "../../switches/MdcSwitch.vue";
 
 const router = useRouter();
 const auth = useAuth();
