@@ -8,7 +8,7 @@
     <Button @click="changePassword">Change password</Button>
 
     <transition name="error-message">
-      <p v-if="form.errors.message" class="bg-red-200 rounded-3xl py-3 px-4 absolute" style="bottom: -4rem;">
+      <p v-if="form.errors.message" class="bg-red-200 rounded-3xl py-3 px-4 absolute text-red-800" style="bottom: -4rem;">
         {{ form.errors.message }}
       </p>
     </transition>
