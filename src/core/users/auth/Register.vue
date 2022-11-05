@@ -30,13 +30,10 @@
             >Confirm password</Textfield
         >
         <div>
-            <input
-                v-model="form.remember"
-                type="checkbox"
-                class="ml-3"
-                id="remember"
-            />
-            <label for="remember" class="ml-1">Remember me</label>
+            <MdcSwitch
+                    v-model="form.remember"
+                    id="remember"
+            >Remember me</MdcSwitch>
         </div>
         <Button @click="auth.register(form)" raised class="mt-5"
             >Register</Button
@@ -63,6 +60,7 @@ import Textfield from "../../fields/OutlinedTextfield.vue";
 import { useRouter } from "vue-router";
 import { useAuth } from ".";
 import { useForm } from "@/store/forms";
+import MdcSwitch from '../../switches/MdcSwitch.vue'
 
 const router = useRouter();
 const auth = useAuth();
