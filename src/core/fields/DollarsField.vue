@@ -156,6 +156,11 @@ $densities: (-4, -3, -2, -1);
         }
     }
     @include textfield.outline-shape-radius(mdc-theme.$textfield-shape-radius);
+    @include textfield.outline-color(var(--color-border));
+    @include textfield.label-color(var(--color-text));
+    @include textfield.prefix-color(var(--color-text));
+    @include textfield.ink-color(var(--color-text));
+    @include textfield.hover-outline-color(var(--color-border-hover));
 }
 
 // Tailwind 'undo' RE MDC mess-up, recommended by Adam Wathan (fixes tons of borders showing up on focus in MDC)
