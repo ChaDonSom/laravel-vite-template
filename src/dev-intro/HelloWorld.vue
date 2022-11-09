@@ -22,6 +22,9 @@
 			<h2 class="text-xl italic mt-3" v-if="$route.params.securityLoggedOut">
 				({{ $route.params.securityLoggedOut }})
 			</h2>
+			<h2 class="text-lg italic mt-3">
+                <a href="https://github.com/ChaDonSom/laravel-vite-template">View the project on Github</a>
+			</h2>
 
             <h2 class="mt-5">Material Components:</h2>
             <div class="flex justify-center gap-5">

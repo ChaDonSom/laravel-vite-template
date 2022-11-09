@@ -1,3 +1,17 @@
+<img src="https://laravel-vite-template.somero.dev/android-chrome-512x512.png" height="55">
+
+# Laravel Vite Template
+
+This is a powerful starter kit, fine-tuned for clean code and uncompromising feature-set.
+
+#### This kit aims to solve the problem of conflicting interests between Laravel and Vue, by separating the two.
+
+The Vue side of the app is its own app, which communicates with the Laravel side, also its own app.
+
+This structure allows the app, as a whole, to be more resilient to change. Laravel updates will not break Vue, nor will Vue updates mess with the Laravel side.
+
+&nbsp;
+
 # Stack
 
 <a href="https://laravel.com" target="_blank" title="Laravel">
@@ -45,7 +59,7 @@
 &nbsp;
 
 <a href="https://github.com/material-components/material-components-web" target="_blank" title="Material Design Components">
-    <img src="https://pbs.twimg.com/profile_images/925576484122779648/ucVTUoPg_400x400.jpg" height="55">
+    <img src="https://laravel-vite-template.somero.dev/images/material_components_web_logo.png" height="55">
 </a> Material Design Components provides beautiful UI components that follow Google's best practices for UI design.
 
 &nbsp;
