@@ -30,20 +30,20 @@
             <div v-else class="flex">
                 <transition name="auth-buttons" mode="out-in">
                     <div v-if="$route.name == 'login'">
-                        <RouterLink to="register">
+                        <RouterLink to="/register">
                             <Button>Register</Button>
                         </RouterLink>
                     </div>
                     <div v-else-if="$route.name == 'register'">
-                        <RouterLink to="login">
+                        <RouterLink to="/login">
                             <Button>Log in</Button>
                         </RouterLink>
                     </div>
                     <div v-else class="flex">
-                        <RouterLink to="login">
+                        <RouterLink to="/login">
                             <Button>Log in</Button>
                         </RouterLink>
-                        <RouterLink to="register">
+                        <RouterLink to="/register">
                             <Button>Register</Button>
                         </RouterLink>
                     </div>
