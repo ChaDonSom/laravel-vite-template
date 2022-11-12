@@ -96,7 +96,8 @@ export const useAuth = defineStore("auth", {
                 let hadUser = Boolean(this.user);
                 this.unauthenticate();
                 if (!this.guestRoutes.some(route => {
-                    return route != "/" && this.router.currentRoute.value.path.startsWith(route)
+                    return (route === "/" && this.router.currentRoute.value.path === route)
+                        || (route !== "/" && this.router.currentRoute.value.path.startsWith(route))
                 })) {
                     this.router.push({
                         name: 'index',
