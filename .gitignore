@@ -11,6 +11,7 @@
 /public/*.png
 /public/*.svg
 /storage/*.key
+/storage/clockwork
 /vendor
 package-lock.json
 .env

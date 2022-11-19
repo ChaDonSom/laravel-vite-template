@@ -3,7 +3,7 @@
     "name": "laravel-vite-template",
     "version": "0.0.1",
     "scripts": {
-        "start": "concurrently \"php artisan serve\" \"php artisan queue:listen\" \"npm run dev\"",
+        "start": "concurrently \"php artisan serve --host 0\" \"php artisan queue:listen\" \"npm run dev -- --host 0\"",
         "production": "npm run build",
         "dev": "vite",
         "build": "run-p type-check build-only",

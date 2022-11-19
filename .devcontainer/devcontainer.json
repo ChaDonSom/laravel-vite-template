@@ -1,0 +1,38 @@
+{
+	"name": "PHP",
+	"dockerFile": "./Dockerfile",
+
+	// Configure tool-specific properties.
+	"customizations": {
+		// Configure properties specific to VS Code.
+		"vscode": {
+			// Set *default* container specific settings.json values on container create.
+			"settings": { 
+				"php.validate.executablePath": "/usr/local/bin/php"
+			},
+			
+			// Add the IDs of extensions you want installed when the container is created.
+			"extensions": [
+				"xdebug.php-debug",
+				"bmewburn.vscode-intelephense-client"
+			]
+		}
+	},
+
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [8000,3000],
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+	"postCreateCommand": "composer install && npm install && sudo service mysql start && sudo mysql -e \"create database code\" && sudo mysql -e \"create user code@'localhost' identified by 'code'\" && sudo mysql -e \"grant all privileges on code.* to code@'localhost'\"",
+
+	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	"remoteUser": "code",
+	"portsAttributes": {
+		"3000": {
+			"label": "vite"
+		},
+		"8000": {
+			"label": "artisan"
+		}
+	}
+}
