@@ -51,7 +51,7 @@
 
 <script setup lang="ts">
 import { MDCTextField } from "@material/textfield";
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 
 const props = defineProps({
     modelValue: [String, Number],
@@ -75,7 +75,11 @@ const mdcTextfield = ref<MDCTextField | null>(null);
 onMounted(() => {
     if (mainRef.value) mdcTextfield.value = new MDCTextField(mainRef.value);
     if (props.autofocus) mainRef.value?.querySelector("input")?.focus();
-});
+})
+
+watch(() => props.modelValue, () => {
+    if (mdcTextfield.value) mdcTextfield.value.value = String(props.modelValue)
+})
 </script>
 
 <style scoped lang="scss">
